@@ -18,7 +18,7 @@ from .models import Player
 # Multimedia
 from .models import Multimedia
 import os
-
+from PIL import Image
 
 # Create your views here.
 class Home(TemplateView):
@@ -145,7 +145,7 @@ class Multimedia_detail(LoginRequiredMixin, DetailView):
 	def get_context_data(self, **kwargs):
 		context = super(Multimedia_detail, self).get_context_data(**kwargs)
 		url = str(self.object.file.url)
-		url = url[6:] # Deleting files/
+		url = url[6:] # Deleting 'files/'
 		
 		if not os.path.exists('appQRMusical/files/temp/'):
 			os.mkdir('appQRMusical/files/temp/')
@@ -156,7 +156,52 @@ class Multimedia_detail(LoginRequiredMixin, DetailView):
 		if context['qr']:
 			print("QR code of %s make it!" % self.object.name)
 
+		context['QRM_color'] = "QRM_orange"
 		context['title'] = "QR code"
 		context['subtitle'] = "QR of multimedia %s" % self.object.name
 
+		img_thumb = square_thumbnail(self.object.image.path)
+		imgQR = img_QR("appQRMusical/files/temp/temp.png")
+		join_thumbnails(img_thumb, imgQR)
+
 		return context
+
+
+def square_thumbnail(url):
+	thumb_size =300, 300
+
+	img = Image.open(url)
+	width, height = img.size
+
+	if width > height:
+		delta = width - height
+		left = int(delta/2)
+		upper = 0
+		right = height + left
+		lower = height
+	else:
+		delta = height - width
+		left = 0
+		upper = int(delta/2)
+		right = width
+		lower = width + upper
+
+	img = img.crop((left, upper, right, lower))
+	img.thumbnail(thumb_size)
+	img = img.resize((300,300))
+	return img
+
+def img_QR(url):
+	imgQR = Image.open(url)
+	imgQR = imgQR.resize((300,300))
+	imgQR = imgQR.convert('RGB')
+	return imgQR
+
+
+def join_thumbnails(img, imgQR):
+	canvas = Image.new('RGB',(600,300))
+	canvas.paste(img,(0,0))
+	canvas.paste(imgQR,(300,0))
+	canvas.show()
+	return canvas
+
