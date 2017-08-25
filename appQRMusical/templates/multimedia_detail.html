@@ -1,0 +1,29 @@
+
+{% extends "body.html" %}
+
+{% block content_wrapper %}
+
+<div class="container">
+	<div class="row">
+		<h1>{{ object.title }}</h1>
+        <h2>{{ object.subtitle }}</h2>
+
+		<div class="col-sm-12 QRM_box {{ QRM_color }}">
+			<div class="QRM_box_in">
+				<h5><a target="_blank" href="{{ object.file.url }}">{{ object.name }}</a> </h5>
+				<img src="/files/temp/temp.png" style="margin: 20px;">
+				<p>Tipo de Archivo: {{ object.filetype }}</p>
+				<p>Ruta de Archivo: {{ object.file.url }}</p>
+				<div class="btn btn-sm btn-default">
+					<p>Download QR</p>
+				</div>	
+			</div>
+		</div>
+
+	</div>
+</div>
+		
+
+{% include "message.html" %}
+
+{% endblock content_wrapper %}
