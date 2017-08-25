@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="es">
+	<head>
+		<title>QRMusical</title>
+		<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+		<link href="{% static 'css/QRMusical.css' %}" rel="stylesheet" type="text/css">
+		<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+		<div id="sidebar" class="navbar QRM_nav navbar-static-top">
+			<div class="container QRM_container">
+				<div class="navbar-header">
+					<a class="navbar-brand QRM_navbar-brand" href="/">QRMusical</a>
+				</div>
+				<div class="navbar-collapse collapse" style="height: 1px;">
+					<ul class="nav navbar-nav QRM_navbar_nav">
+						<li><a href="/">Home</a></li>
+						<li><a href="/settings/">Settings</a></li>
+						{% if user.is_authenticated %}
+							<li><a href="/logout/">Logout</a></li>
+						{% else %}
+							<li><a href="/login/">Login</a></li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="content">
+			{% block body %}{% endblock body %}
+		</div>
+	
+		<div style="display:none">
+		<!--
+div to stop cam
+		-->
+		</div>
+		
+		<footer>
+			<div class="container">
+				<center>
+					<div class="text" style="color: #778088">
+						© 2017 
+						<strong>QRMusical by Teo</strong>.
+						Made with <span class="QRM_love">♥</span> in Django
+					</div>
+				</center>
+			</div>
+		</footer>
+	</body>
+</html>

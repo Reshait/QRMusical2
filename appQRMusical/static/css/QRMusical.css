@@ -1,0 +1,218 @@
+.QRM_nav{
+    font-size: 18px;
+    color: #262626;
+    font-weight: bold;
+}
+.QRM_navbar_nav{
+	float:right;
+}
+
+.QRM_navbar-brand{
+	font-size: 45px;
+}
+
+.QRM_container{
+	padding: 40px 0px 20px 0px;
+}
+
+.QRM_box{
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	padding: 25px;
+	text-align: center;
+	font-size: 24px;
+	line-height: 36px;
+	-webkit-transition-duration: 0.4s;
+	transition-duration: 0.4s;
+}
+
+.QRM_box_in{
+	border-style: dashed;
+	border-width: thin;
+	border-color: rgba(0, 0, 0, 0.1);
+	background-color: rgba(0, 0, 0, 0.1);
+/*	min-height: 300px; */
+	color: #fff;
+
+	padding: 20px;
+}
+
+.QRM_svg{
+	fill:white;
+	width: 200px
+}
+
+svg:hover #play{
+	fill:currentColor;
+	width: 200px;
+	height: 200px;
+}
+
+.QRM_item_list{
+	padding: 0px;
+    border: 2px dashed;
+    border-color: black;
+    overflow: hidden;
+    border-radius: 5px;
+    margin: 15px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+    transition: all 200ms ease-out;
+	text-align: -webkit-center;
+}
+
+.QRM_item_delete{
+    position: absolute;
+    right: 0;
+}
+
+.QRM_item_delete:hover{
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+}
+
+
+.QRM_item_list:hover{
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.QRM_green{
+	background-color: #00CC44;
+}
+
+.QRM_pink{
+    background-color: #FF59AC;
+}
+
+.QRM_orange{
+    background-color: #FF9F19;
+}
+
+.QRM_blue{
+    background-color: #49C8F2;
+}
+
+.QRM_love{
+	color: #ff6032;
+	font-size: 1.3em;
+}
+
+.QRM_gray{
+	background-color: #efefef
+}
+
+.QRM_btn_home{
+    background-color: white !important;
+    border: 1px solid #c1c1c1 !important;
+    margin: 15px;
+    color: #444445;
+    padding: 10px;
+	display: inline-block;
+}
+
+.QRM_home:hover{
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.QRM_btn{
+	background-color: transparent;
+	border-width: 2px;
+	border-style: solid;
+	border-color: white;
+	min-width: 90px;
+	max-width: 360px;
+	text-decoration: none;
+	font-size: 18px;
+	font-weight: bold;
+	font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	font-stretch: normal;
+	border-radius: 5px;
+	margin-top: 20px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;	
+}
+
+.QRM_btn:hover{
+	background-color: white;
+	color: black;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	fill:black;
+}
+
+.QRM_wrapper_table{
+    padding: 1.5rem;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    border-width: .2rem;
+    position: relative;
+    padding: 1rem;
+    margin: 1rem -1rem;
+    border: solid #f7f7f9;	
+    background-color: white;
+    border-radius: 5px;
+}
+
+h1 {
+	font-size: 32px;
+	line-height: 1.5;
+	font-weight: 600;
+	color: #262626;
+	margin: 0;
+}
+h2 {
+	font-weight: 300;
+	color: #262626;
+	font-size: 24px;
+	line-height: 1.5;
+	margin: 0;
+}
+h5{
+	font-size: 18px !important;
+	line-height: 26px;
+	font-weight: 600;
+	margin: 0;
+	display: block;
+	font-size: 1.17em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	font-weight: bold;
+}
+body {
+	font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+
+a { 
+	color: inherit; 
+	text-decoration: none;
+}
+
+a:hover { 
+	text-decoration: none;
+}
+
+p {
+	margin: 0;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 400;
+}
+
+footer{
+	padding: 50px 0px 20px 0px;
+}
+
+input{
+	color:black;
+}
+
+table {
+	font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    color: #292b2c;
+}
+
+td{
+    text-align: left;
+}

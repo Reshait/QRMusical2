@@ -1,0 +1,35 @@
+
+{% extends "body.html" %}
+
+{% block content_wrapper %}
+
+<div class="col-sm-12 QRM_box {{QRM_color}}">
+	<div class="QRM_box_in">
+		<div class="QRM_wrapper_table">
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>List Name</th>
+						<th>Description</th>						
+			    	</tr>
+				</thead>
+				<tbody>
+					{% for son in object_list %}
+						<tr onclick="document.location = '/';">
+		      				<th scope="row">{{ son.id }}</th>
+		      				<td>{{ son.name }}</td>
+		      				<td>{{ son.description }}</td>
+		    			</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+</div>
+
+{% include "message.html" %}
+
+{% endblock content_wrapper %}
