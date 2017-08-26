@@ -19,6 +19,7 @@ from .models import Player
 from .models import Multimedia
 import os
 from PIL import Image
+from django.conf import settings
 
 # Create your views here.
 class Home(TemplateView):
@@ -202,6 +203,5 @@ def join_thumbnails(img, imgQR):
 	canvas = Image.new('RGB',(600,300))
 	canvas.paste(img,(0,0))
 	canvas.paste(imgQR,(300,0))
-	canvas.show()
-	return canvas
-
+#	canvas.show()
+	canvas.save(settings.MEDIA_ROOT+"/temp/img_QR.jpg")

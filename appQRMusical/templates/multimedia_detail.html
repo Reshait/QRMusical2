@@ -14,9 +14,11 @@
 				<img src="/files/temp/temp.png" style="margin: 20px;">
 				<p>Tipo de Archivo: {{ object.filetype }}</p>
 				<p>Ruta de Archivo: {{ object.file.url }}</p>
-				<div class="btn btn-sm btn-default">
-					<p>Download QR</p>
-				</div>	
+				<a href="/files/temp/img_QR.jpg" download="{{ object.name }}">
+					<div class="btn btn-sm btn-default">
+						<p>Download QR</p>
+					</div>	
+				</a>
 			</div>
 		</div>
 
