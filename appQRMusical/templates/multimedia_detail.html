@@ -8,12 +8,26 @@
 		<h1>{{ object.title }}</h1>
         <h2>{{ object.subtitle }}</h2>
 
+        <a href="{% url 'gallery' %}">
+	        <div>
+	        	<p>← Back to Gallery</p>
+			</div>
+		</a>
+
 		<div class="col-sm-12 QRM_box {{ QRM_color }}">
 			<div class="QRM_box_in">
-				<h5><a target="_blank" href="{{ object.file.url }}">{{ object.name }}</a> </h5>
+				{% if object.file %}
+					<h5><a target="_blank" href="{{ object.file.url }}">{{ object.name }}</a> </h5>
+				{% else %}
+					<h5><a target="_blank" href="{{ object.image.url }}">{{ object.name }}</a> </h5>
+				{% endif %}
 				<img src="/files/temp/temp.png" style="margin: 20px;">
 				<p>Tipo de Archivo: {{ object.filetype }}</p>
-				<p>Ruta de Archivo: {{ object.file.url }}</p>
+				{% if object.file %}
+					<p>Url file: {{ object.file.url }}</p>
+				{% else %}
+					<p>Url image: {{ object.image.url }}</p>
+				{% endif %}
 				<a href="/files/temp/img_QR.jpg" download="{{ object.name }}">
 					<div class="btn btn-sm btn-default">
 						<p>Download QR</p>
@@ -21,7 +35,6 @@
 				</a>
 			</div>
 		</div>
-
 	</div>
 </div>
 		

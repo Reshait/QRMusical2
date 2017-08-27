@@ -26,10 +26,12 @@
 		      				<td style="width: 10%;"><img src="/{{ son.image.url }}" style="width: 100px;"></td>
 		      				<td style="width: 60%;">{{ son.name }}</td>
 		      				<td style="width: 20%;">
+		      					{% if son.file %}
 		      					<audio controls style="width: 100%;">
 									<source src="/{{ son.file.url }}" type="audio/mp3">
 									Your browser does not support the audio element.
 								</audio>
+								{% endif %}
 							</td>
 							<td>
 								<a href="{% url 'multimedia_detail' son.pk %}">
@@ -39,16 +41,28 @@
 								</a>								
 							</td>
 							<td>
-								<button type="submit" class="btn btn-danger btn-sm">
-								<p>✖</p>
-								</button>
+								<form action="{% url 'multimedia_delete' son.id %}" method="post">
+									{% csrf_token %}
+									<center>
+										<input type="hidden" name="son_id" value="{{ son.id }}"/>
+										<button type="submit" class="btn btn-danger btn-sm">
+											<p>✖</p>
+										</button>
+									</center>
+								</form>
 							</td>							
 		    			</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-
 		</div>
+
+		<a href="{% url 'upload_multimedia' %}">
+			<div class="btn btn-sm btn-default">
+				<p>Add Multimedia</p>
+			</div>	
+		</a>
+
 	</div>
 </div>
 

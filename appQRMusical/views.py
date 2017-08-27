@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, DeleteView
 
 # Login
 from django.contrib.auth import authenticate, login, logout
@@ -20,6 +20,8 @@ from .models import Multimedia
 import os
 from PIL import Image
 from django.conf import settings
+from django.views.generic.edit import FormView
+from .forms import UploadMultimediaForm
 
 # Create your views here.
 class Home(TemplateView):
@@ -145,7 +147,11 @@ class Multimedia_detail(LoginRequiredMixin, DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super(Multimedia_detail, self).get_context_data(**kwargs)
-		url = str(self.object.file.url)
+		if self.object.file:
+			url = str(self.object.file.url)
+		else:  # If there are not file and only exists image:
+			url = str(self.object.image.url)
+
 		url = url[6:] # Deleting 'files/'
 		
 		if not os.path.exists('appQRMusical/files/temp/'):
@@ -203,5 +209,78 @@ def join_thumbnails(img, imgQR):
 	canvas = Image.new('RGB',(600,300))
 	canvas.paste(img,(0,0))
 	canvas.paste(imgQR,(300,0))
-#	canvas.show()
 	canvas.save(settings.MEDIA_ROOT+"/temp/img_QR.jpg")
+
+
+@login_required(login_url='login')
+def upload_multimedia(request):
+
+	context = {
+		'message_alert' : 	'alert-info',
+		'message_head'	:	'Info, ',
+		'message_text'	:	'Select a File, and press Upload.',
+	}
+
+	if request.method == 'POST':
+		context['form'] = UploadMultimediaForm(request.POST, request.FILES)
+		if context['form'].is_valid():
+			file_up = Multimedia()
+			files = request.FILES
+			data = request.POST
+			file_up.image = files['image']
+
+			if 'file' in files:
+				file_up.file = files['file']
+				file_up.name = file_up.file.name
+			else:
+				file_up.file = None
+				file_up.name = file_up.image.name
+
+			name, ext = file_up.name.rsplit('.', 1)
+			file_up.name = name
+			file_up.filetype = ext
+			file_up.save()
+			file_up.players = request.POST['players']
+
+			context['message_alert'] = "alert-success"
+			context['message_head'] = "Success! "
+			context['message_text'] = "File \"%s\" upload success" % (file_up.name)
+
+	else:
+		context['form'] = UploadMultimediaForm()
+
+	return render(request, 'upload.html', context)	
+
+
+class Multimedia_delete(DeleteView):
+	model = Multimedia
+	success_url = '/settings/gallery'
+	def get_object(self):
+		obj = super(Multimedia_delete, self).get_object()
+
+		if obj.file:
+			path_file = join_url_with_media_root(obj.file.url)
+			os.remove(path_file)
+
+		path_image = join_url_with_media_root(obj.image.url)
+		os.remove(path_image)
+		return obj	
+
+
+def join_url_with_media_root(url):
+	url = url[6:] # del 'files/'....
+	path = os.path.join(settings.MEDIA_ROOT+'%s' % url)
+	return path
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,37 @@
+{% extends "body.html" %}
+
+{% block content_wrapper %}
+
+<div style='text-align:center; margin: 0 auto; width: 90%'>
+    <a href="{% url 'gallery' %}">
+        <div style="position:absolute;">
+            <p>← Back to Gallery</p>
+        </div>
+    </a>
+    <h1 class="page-header">Upload Files</h1>
+
+    <div class="jumbotron">
+        <h2 class="form-signin-heading">Select your files to upload</h2>
+
+        <form method="post" enctype="multipart/form-data" class="form-signin">
+            {% csrf_token %}
+<!--
+            <p style="color: #333 !important;">User:</p><input class="form-control" placeholder="Nombre de usuario" type="text" name="username" value="" size="50" required autofocus=""/>
+            <br />
+            <p style="color: #333 !important;">Password:</p> <input class="form-control" placeholder="Password" type="password" name="password" value="" size="50" />
+            <br />
+-->
+            <center>
+                <p>{{ form.as_p }}</p>
+            </center>
+
+            <input class="btn btn-default" type="submit" value="Upload" />
+        </form>
+    </div>
+
+</div>
+
+
+{% include "message.html" %}
+
+{% endblock content_wrapper %}
