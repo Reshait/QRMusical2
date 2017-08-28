@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView, DeleteView
+from django.views.generic import TemplateView, ListView, DetailView, DeleteView, UpdateView, CreateView
 
 # Login
 from django.contrib.auth import authenticate, login, logout
@@ -22,6 +22,13 @@ from PIL import Image
 from django.conf import settings
 from django.views.generic.edit import FormView
 from .forms import UploadMultimediaForm
+
+# Player
+from .models import Player
+from .forms import UploadPlayerForm
+from django.core.urlresolvers import reverse_lazy
+
+
 
 # Create your views here.
 class Home(TemplateView):
@@ -273,10 +280,62 @@ def join_url_with_media_root(url):
 	return path
 
 
+class Players_list(LoginRequiredMixin, ListView):
+	model = Player
+	template_name="players_list.html"
+	login_url='/login/'
+	redirect_field_name = "/login/"
+	def get_context_data(self, **kwargs):
+		context = super(Players_list, self).get_context_data(**kwargs)
+		context['QRM_color'] = "QRM_orange"
+		context['message_alert'] = "alert-info"
+		context['message_head'] = "Info, "
+		context['message_text'] = "Setting player's game."
+		context['title'] = "Players"
+		context['subtitle'] = "Configure your app"
+		return context
 
 
+class Update_player(LoginRequiredMixin, UpdateView):
+	model = Player
+	form_class = UploadPlayerForm
+	template_name="player_detail.html"
+	login_url='/login/'
+	redirect_field_name = "/login/"
+	success_url = reverse_lazy('players_list')
+
+	def get_context_data(self, **kwargs):
+		context = super(Update_player, self).get_context_data(**kwargs)
+		context['QRM_color'] = "QRM_orange"
+		context['message_alert'] = "alert-info"
+		context['message_head'] = "Info, "
+		context['message_text'] = "Setting player's game."
+		context['title'] = "Update Player"
+		context['subtitle'] = "Update and Configure your player"
+		context['songs'] = Multimedia.objects.filter(players__in=[self.object])
+		context['btn_label'] = 'Update'
+		return context
 
 
+class Create_player(LoginRequiredMixin, CreateView):
+	model = Player
+	form_class = UploadPlayerForm
+	template_name="player_detail.html"
+	login_url='/login/'
+	redirect_field_name = "/login/"
+	success_url = reverse_lazy('players_list')
+
+	def get_context_data(self, **kwargs):
+		context = super(Create_player, self).get_context_data(**kwargs)
+		context['QRM_color'] = "QRM_orange"
+		context['message_alert'] = "alert-info"
+		context['message_head'] = "Info, "
+		context['message_text'] = "Setting player's game."
+		context['title'] = "Create Player"
+		context['subtitle'] = "Create your player"
+		context['songs'] = Multimedia.objects.filter(players__in=[self.object])
+		context['btn_label'] = "Create"
+		return context
 
 
 

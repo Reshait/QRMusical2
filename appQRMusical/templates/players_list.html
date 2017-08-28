@@ -1,0 +1,77 @@
+
+{% extends "body.html" %}
+
+{% block content_wrapper %}
+
+<div class="col-sm-12 QRM_box {{QRM_color}}">
+	<div class="QRM_box_in">
+		<div class="QRM_wrapper_table">
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Enable</th>	
+						<th>delete</th>						
+			    	</tr>
+				</thead>
+				<tbody>
+					{% for object in object_list %}
+						<tr onclick="document.location = {% url 'update_player' object.id %};">
+		      				<th scope="row" style="width: 3%;">{{ object.id }}</th>
+
+		      				<td style="width: 20%;">
+		      					{{ object.name }}
+								<a href="{% url 'update_player' object.id %}" class="btn btn-sm btn-default">Ver</a>
+		      				</td>
+
+		      				<td style="width: 60%;">{{ object.description }}</td>
+							
+							<td>
+								<center>
+								<p>{% if object.enabled %}YES{% else %}NO{% endif %}</p>
+
+
+								</center>
+							</td>
+							
+							<td>
+								<form action="{% url 'multimedia_delete' object.id %}" method="post">
+									{% csrf_token %}
+									<center>
+										<input type="hidden" name="object_id" value="{{ object.id }}"/>
+										<button type="submit" class="btn btn-danger btn-sm">
+											<p>✖</p>
+										</button>
+									</center>
+								</form>
+							</td>	
+
+		    			</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<a href="{% url 'create_player' %}">
+			<div class="btn btn-sm btn-default">
+				<p>Add Player</p>
+			</div>	
+		</a>
+
+	</div>
+</div>
+
+<script>
+function  toggle_select(id) {
+    var object = document.getElementById(id);
+ 	object.enabled = !object.enabled;
+}	
+
+</script>
+
+{% include "message.html" %}
+
+{% endblock content_wrapper %}
