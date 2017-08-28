@@ -338,6 +338,17 @@ class Create_player(LoginRequiredMixin, CreateView):
 		return context
 
 
+def add_multimedia_to_player(request, id):
+	print("ID ----> %s" % id)
+	obj = Player.objects.filter(id=id).values()
+	print("Objeto ----> %s" % obj)
+
+	context = { 
+		'object_list' 	: Multimedia.objects.exclude(players__in=[id]),
+		'title' 		: Player.objects.filter(id=id)
+		}
+
+	return render(request, 'add_multimedia_to_player.html', context)	
 
 
 

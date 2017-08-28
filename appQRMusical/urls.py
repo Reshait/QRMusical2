@@ -30,6 +30,6 @@ urlpatterns = [
 	url(r'^settings/players_list/$', Players_list.as_view(), name='players_list'), 
 	url(r'^settings/players_list/(?P<pk>\d+)/update/$', Update_player.as_view(), name='update_player'), 
 	url(r'^settings/players_list/create/$', Create_player.as_view(), name='create_player'), 
-
+	url(r'^settings/players_list/(?P<id>\d+)/add_multimedia_to_player/$', views.add_multimedia_to_player, name='add_multimedia_to_player'), 
 	  
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
