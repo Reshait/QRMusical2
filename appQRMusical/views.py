@@ -30,6 +30,13 @@ from django.core.urlresolvers import reverse_lazy
 
 
 
+
+
+from django.core.urlresolvers import reverse
+
+
+
+
 # Create your views here.
 class Home(TemplateView):
 	template_name="home.html"
@@ -314,6 +321,7 @@ class Update_player(LoginRequiredMixin, UpdateView):
 		context['subtitle'] = "Update and Configure your player"
 		context['songs'] = Multimedia.objects.filter(players__in=[self.object])
 		context['btn_label'] = 'Update'
+		context['player_id'] = self.object.id
 		return context
 
 
@@ -338,19 +346,55 @@ class Create_player(LoginRequiredMixin, CreateView):
 		return context
 
 
+@login_required(login_url='login')
 def add_multimedia_to_player(request, id):
-	print("ID ----> %s" % id)
-	obj = Player.objects.filter(id=id).values()
-	print("Objeto ----> %s" % obj)
+	objs = Player.objects.filter(id=id)
 
 	context = { 
 		'object_list' 	: Multimedia.objects.exclude(players__in=[id]),
-		'title' 		: Player.objects.filter(id=id)
+		'title' 		: objs[0],
+		'subtitle'		: "Add songs to Player %s" % objs[0],
+		'QRM_color'		: "QRM_orange",
+		'player_id'		: id
 		}
 
 	return render(request, 'add_multimedia_to_player.html', context)	
 
 
+@login_required(login_url='login')
+def add_multimedia_to_player_function(request, id_player, id_multimedia):
+	player_to_add = Player.objects.get(id=id_player)
+	mults = Multimedia.objects.filter(id=id_multimedia)
+	mults[0].players.add(player_to_add)
+
+	objs = Player.objects.filter(id=id_player)
+
+	context = { 
+		'object_list' 	: Multimedia.objects.exclude(players__in=[id_player]),
+		'title' 		: objs[0],
+		'subtitle'		: "Add songs to Player %s" % objs[0],
+		'QRM_color'		: "QRM_orange",
+		'player_id'		: id_player
+		}
+	return render(request, 'add_multimedia_to_player.html', context)	
+
+
+@login_required(login_url='login')
+def del_multimedia_of_player_function(request, id_player, id_multimedia):
+	player_to_del = Player.objects.get(id=id_player)
+	mults = Multimedia.objects.filter(id=id_multimedia)
+	mults[0].players.remove(player_to_del)
+
+	objs = Player.objects.filter(id=id_player)
+
+	context = { 
+		'object_list' 	: Multimedia.objects.exclude(players__in=[id_player]),
+		'title' 		: objs[0],
+		'subtitle'		: "Add songs to Player %s" % objs[0],
+		'QRM_color'		: "QRM_orange",
+		}
+
+	return HttpResponseRedirect('/settings/players_list/%s/update/' % id_player)
 
 
 

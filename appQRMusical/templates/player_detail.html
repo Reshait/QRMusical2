@@ -31,7 +31,7 @@
 					<th>Name</th>
 					<th>track</th>	
 					<th>QR</th>						
-					<th>delete</th>						
+					<th>unlink</th>						
 
 		    	</tr>
 			</thead>
@@ -57,11 +57,11 @@
 							</a>								
 						</td>
 						<td>
-							<form action="{% url 'multimedia_delete' son.id %}" method="post">
+							<form action="{% url 'del_multimedia_of_player_function' player_id son.id %}" method="post">
 								{% csrf_token %}
 								<center>
 									<input type="hidden" name="son_id" value="{{ son.id }}"/>
-									<button type="submit" class="btn btn-danger btn-sm">
+									<button type="submit" class="btn btn-default btn-sm">
 										<p>✖</p>
 									</button>
 								</center>
@@ -72,11 +72,13 @@
 			</tbody>
 		</table>
 
+		{% if object.id %}
 		<a href="{% url 'add_multimedia_to_player' object.id %}">
 			<div class="btn btn-sm btn-default">
 				<p>Add Multimedia</p>
 			</div>	
 		</a>
+		{% endif %}
 
 		
 	</div>
