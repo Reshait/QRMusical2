@@ -14,6 +14,8 @@ urlpatterns = [
 	# Play
 	url(r'^play/$', Play.as_view(), name='play'),	
 	url(r'^play/songs_list/$', Songs.as_view(), name='songs_list'),	
+	url(r'^play/songs_list/(?P<id_player>\d+)/player_game/$', views.player_game, name='player_game'),	
+#	url(r'^play/songs_list/(?P<id_player>\d+)/player_game/$', views.message, name='message'),	
 
     # Login
 	url(r'^login/$', views.Login, name='login'),

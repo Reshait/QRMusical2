@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load zbar_extras %}
 <html lang="es">
 	<head>
 		<title>QRMusical</title>
@@ -31,9 +32,9 @@
 		</div>
 	
 		<div style="display:none">
-		<!--
-div to stop cam
-		-->
+			{% if request.get_full_path|slice:":12" != 'player_game/' %}	
+				{% stop_cam %}
+			{% endif %}
 		</div>
 		
 		<footer>

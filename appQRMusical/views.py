@@ -14,6 +14,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Play + Multimedia
 from .models import Player
+import global_vars
 
 # Multimedia
 from .models import Multimedia
@@ -28,7 +29,8 @@ from .models import Player
 from .forms import UploadPlayerForm
 from django.core.urlresolvers import reverse_lazy
 
-
+#Player Game
+import threading
 
 
 
@@ -75,6 +77,63 @@ class Songs(ListView):
 		context['subtitle'] = "Select a list of songs"
 		return context
 
+
+def message(request):
+#	global_vars.message
+	context = {'glob_message' : global_vars.message,}
+#	return render(request, 'glob_message.html', context)
+
+
+def read_code():
+		data = global_vars.zbar_status.readline()
+		qrcode = str(data)[8:]
+		if qrcode:
+			print(qrcode)
+			global_vars.message = qrcode
+
+
+def player_game(request, id_player):	
+	global_vars.cam
+	global_vars.message
+	global_vars.zbar_status
+
+	context = {'message_alert' : "alert-info"}
+
+	if global_vars.cam == 0:
+		global_vars.message = 'Get close QR code to cam'
+		global_vars.cam = 1
+
+	elif global_vars.cam == 1:
+		global_vars.zbar_status = os.popen('/usr/bin/zbarcam --prescale=320x240','r')
+		global_vars.cam = 2
+		
+	elif global_vars.cam == 2:
+		global_vars.cam = 3
+		if global_vars.zbar_status != None:
+			t = threading.Thread(target=read_code)
+			t.start()
+
+	print(global_vars.message)
+
+	url = global_vars.message
+	url = url[1:-1] 					#-1 is for delete \n
+	
+	if global_vars.message != "Get close QR code to cam":
+		path = settings.MEDIA_ROOT+'%s' % (url)
+		
+		if os.path.exists(path):
+			context['message_alert'] = "alert-success"
+			context['image'] = settings.MEDIA_URL+'%s' % (url)
+		else:
+			context['message_alert'] = "alert-danger"
+
+	context['message_text'] = global_vars.message
+	context['title'] = "%s Player Game" % id_player
+	context['subtitle'] = "Select a list of songs"
+	context['id_player'] = id_player
+	
+	return render(request, 'player_game.html', context)
+	#return HttpResponseRedirect('/play/songs_list/%s/player_game/' % id_player)
 
 # ======== Login zone ========
 def Login(request):    
