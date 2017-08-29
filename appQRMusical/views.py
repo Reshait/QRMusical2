@@ -93,9 +93,7 @@ def read_code():
 
 
 def player_game(request, id_player):	
-	global_vars.cam
-	global_vars.message
-	global_vars.zbar_status
+	player = Player.objects.get(id=id_player)
 
 	context = {'message_alert' : "alert-info"}
 
@@ -108,7 +106,7 @@ def player_game(request, id_player):
 		global_vars.cam = 2
 		
 	elif global_vars.cam == 2:
-		global_vars.cam = 3
+		#global_vars.cam = 3
 		if global_vars.zbar_status != None:
 			t = threading.Thread(target=read_code)
 			t.start()
@@ -128,9 +126,11 @@ def player_game(request, id_player):
 			context['message_alert'] = "alert-danger"
 
 	context['message_text'] = global_vars.message
-	context['title'] = "%s Player Game" % id_player
+	context['title'] = "%s Player Game" % player.name
 	context['subtitle'] = "Select a list of songs"
-	context['id_player'] = id_player
+	context['id_player'] = id_player 
+	context['name_player'] = player.name 
+	
 	
 	return render(request, 'player_game.html', context)
 	#return HttpResponseRedirect('/play/songs_list/%s/player_game/' % id_player)

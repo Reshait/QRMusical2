@@ -5,6 +5,11 @@
 
 {% load staticfiles %}
 
+<a href="{% url 'songs_list' %}">
+	<div>
+		<p>← Back to songs list</p>
+	</div>
+</a>
 <!-- DESDE AQUÍ
 -->
 <div id="auto" >
@@ -13,7 +18,7 @@
 		<div class="QRM_box_in">
 
 			<div style="width:200; overflow: hidden">
-
+			<h5>Show to cam <strong>{{ name_player }}</strong> QR codes</h5>
 			{% if image %}
 				<img src="{{ image }}" width="200">
 			{% else %}

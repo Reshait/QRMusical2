@@ -32,7 +32,7 @@
 		</div>
 	
 		<div style="display:none">
-			{% if request.get_full_path|slice:":12" != 'player_game/' %}	
+			{% if not 'player_game/' in request.get_full_path %}
 				{% stop_cam %}
 			{% endif %}
 		</div>
