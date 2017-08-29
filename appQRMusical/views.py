@@ -92,11 +92,7 @@ def read_code():
 			global_vars.message = qrcode
 
 
-def player_game(request, id_player):	
-	player = Player.objects.get(id=id_player)
-
-	context = {'message_alert' : "alert-info"}
-
+def start_cam():
 	if global_vars.cam == 0:
 		global_vars.message = 'Get close QR code to cam'
 		global_vars.cam = 1
@@ -106,15 +102,41 @@ def player_game(request, id_player):
 		global_vars.cam = 2
 		
 	elif global_vars.cam == 2:
-		#global_vars.cam = 3
 		if global_vars.zbar_status != None:
 			t = threading.Thread(target=read_code)
-			t.start()
+			t.start()	
+
+def game(id_player):
+	mults = Multimedia.objects.filter(players__in=Player.objects.filter(id = id_player))
+	url=""
+	for mult in mults:
+		if "images" == global_vars.message.split('/')[0]:
+			url = mult.image.url
+			
+		elif "songs" == global_vars.message.split('/')[0] or "video" == global_vars.message.split('/')[0]:
+			if mult.file:
+				url = mult.file.url
+				print("mult.FILE.url --> %s" % url)
+				
+		url = url[6:]  # del "files/" of url
+		
+		if url == global_vars.message[:-1]:
+			print("ACIERTO!!!!===================================\n%s__\n%s" % (url, global_vars.message))
+		
+		
+def player_game(request, id_player):	
+	player = Player.objects.get(id=id_player)
+
+	context = {'message_alert' : "alert-info"}
+
+	start_cam()
 
 	print(global_vars.message)
 
 	url = global_vars.message
 	url = url[1:-1] 					#-1 is for delete \n
+
+	game(id_player)
 	
 	if global_vars.message != "Get close QR code to cam":
 		path = settings.MEDIA_ROOT+'%s' % (url)
