@@ -120,31 +120,38 @@ def game(id_player):
 	matching = False
 
 	context = {}
-	
-	for obj in global_vars.game_objects:
-		if "images" == qrcode.split('/')[0]:
-			url = obj.image.url
-			
-		elif "songs" == qrcode.split('/')[0] or "video" == qrcode.split('/')[0]:
-			if obj.file:
-				url = obj.file.url
+	print("%s_" % global_vars.game_success)
+	print("%s_" % global_vars.game_number_objects)
+
+	if global_vars.game_success == global_vars.game_number_objects:
+		global_vars.game_display = "inline"
+
+	else:
+		for obj in global_vars.game_objects:
+			if "images" == qrcode.split('/')[0]:
+				url = obj.image.url
 				
-		url = url[6:]  # del "files/" of url
+			elif "songs" == qrcode.split('/')[0] or "video" == qrcode.split('/')[0]:
+				if obj.file:
+					url = obj.file.url
+					
+			url = url[6:]  # del "files/" of url
+			
+			if url == qrcode: # Match OK
+				global_vars.game_success +=1
+				global_vars.game_objects.remove(obj)
+				print("ACIERTO!!!!===================================\n%s__\n%s" % (url, global_vars.message))
+				global_vars.last_message = global_vars.message
+				matching = True
+				global_vars.message_alert = "alert-success"
+				global_vars.game_image = ('/%s%s') % (settings.MEDIA_URL,obj.image.url[6:])
 		
-		if url == qrcode: # Match OK
-			global_vars.game_success +=1
-			global_vars.game_objects.remove(obj)
-			print("ACIERTO!!!!===================================\n%s__\n%s" % (url, global_vars.message))
+		if global_vars.last_message != global_vars.message and matching == False: # Doesnt match
+			global_vars.game_fail += 1
 			global_vars.last_message = global_vars.message
-			matching = True
-			global_vars.message_alert = "alert-success"
-			global_vars.game_image = ('/%s%s') % (settings.MEDIA_URL,obj.image.url[6:])
-#			global_vars.game_image = ('/%s%s') % (settings.MEDIA_URL,url)
+			global_vars.message_alert = "alert-danger"
 	
-	if global_vars.last_message != global_vars.message and matching == False: # Doesnt match
-		global_vars.game_fail += 1
-		global_vars.last_message = global_vars.message
-		global_vars.message_alert = "alert-danger"
+	print("GAME DISPLAY====\n %s" % global_vars.game_display)
 
 	return context
 					
@@ -170,6 +177,7 @@ def player_game(request, id_player):
 	context['game_success'] = global_vars.game_success
 	context['game_points'] = global_vars.game_points
 	context['game_number_objects'] = global_vars.game_number_objects
+	context['game_display'] = global_vars.game_display
 	
 	return render(request, 'player_game.html', context)
 

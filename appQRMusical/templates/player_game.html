@@ -13,6 +13,17 @@
 <!-- DESDE AQUÍ
 -->
 <div id="auto" >
+	
+	<div style="width:100%; height:100%; display:{{game_display}}; background-color:rgba(0,0,0,0.6); position:absolute;top:0;left:0;z-index:9999">
+		<div class="col-sm-2" style="display:inline"></div>
+		<div class="col-sm-8" style="display:inline;text-align:center; background-color:white; position: absolute;top: 24%;border-radius: 10px;padding: 30px;">
+			<h1>Supercool!!!</h1>
+			<img src="/files/static/congrats.png">
+			<p>You are awesome!!</p>
+			<p>come <a href="{% url 'songs_list' %}" class="btn btn-default">← BACK</a> to select another one game, and play again!.</p>
+		</div>
+		<div class="col-sm-2" style="display:inline"></div>
+	</div>
 
 	<div class="col-sm-12 QRM_box QRM_pink">
 		<div class="QRM_box_in">

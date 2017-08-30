@@ -11,8 +11,9 @@ game_success = 0
 game_fail = 0
 game_objects = None
 game_initialized = False
-game_number_objects = 0
+game_number_objects = -1
 message_alert = "alert-info"
 game_image = "/files/static/Who.png"
+game_display = "none"
 fail_flag = False
 
