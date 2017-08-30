@@ -107,21 +107,40 @@ def start_cam():
 			t.start()	
 
 def game(id_player):
-	mults = Multimedia.objects.filter(players__in=Player.objects.filter(id = id_player))
+	if global_vars.game_initialized == False:
+		mults = Multimedia.objects.filter(players__in=Player.objects.filter(id = id_player))
+		global_vars.game_number_objects = mults.count()
+		mults = list(mults)
+		global_vars.game_objects = mults
+		global_vars.game_initialized = True
+
 	url=""
-	for mult in mults:
-		if "images" == global_vars.message.split('/')[0]:
-			url = mult.image.url
+	qrcode = global_vars.message[:-1] # del "\n" in end
+
+#	number_object_flag = global_vars.game_number_objects
+	matching = False
+	
+	for obj in global_vars.game_objects:
+		if "images" == qrcode.split('/')[0]:
+			url = obj.image.url
 			
-		elif "songs" == global_vars.message.split('/')[0] or "video" == global_vars.message.split('/')[0]:
-			if mult.file:
-				url = mult.file.url
-				print("mult.FILE.url --> %s" % url)
+		elif "songs" == qrcode.split('/')[0] or "video" == qrcode.split('/')[0]:
+			if obj.file:
+				url = obj.file.url
 				
 		url = url[6:]  # del "files/" of url
 		
-		if url == global_vars.message[:-1]:
+		if url == qrcode:
+			global_vars.game_success +=1
+			global_vars.game_objects.remove(obj)
 			print("ACIERTO!!!!===================================\n%s__\n%s" % (url, global_vars.message))
+			global_vars.last_message = global_vars.message
+			matching = True
+	
+	if global_vars.last_message != global_vars.message and matching == False:
+		global_vars.game_fail += 1
+		global_vars.last_message = global_vars.message
+		
 		
 		
 def player_game(request, id_player):	
@@ -152,6 +171,10 @@ def player_game(request, id_player):
 	context['subtitle'] = "Select a list of songs"
 	context['id_player'] = id_player 
 	context['name_player'] = player.name 
+	context['game_fail'] = global_vars.game_fail
+	context['game_success'] = global_vars.game_success
+	context['game_points'] = global_vars.game_points
+	context['game_number_objects'] = global_vars.game_number_objects
 	
 	
 	return render(request, 'player_game.html', context)
