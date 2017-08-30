@@ -107,7 +107,7 @@ def start_cam():
 			t.start()	
 
 def game(id_player):
-	if global_vars.game_initialized == False:
+	if global_vars.game_initialized == False: # First start of game
 		mults = Multimedia.objects.filter(players__in=Player.objects.filter(id = id_player))
 		global_vars.game_number_objects = mults.count()
 		mults = list(mults)
@@ -117,7 +117,6 @@ def game(id_player):
 	url=""
 	qrcode = global_vars.message[:-1] # del "\n" in end
 
-#	number_object_flag = global_vars.game_number_objects
 	matching = False
 	
 	for obj in global_vars.game_objects:

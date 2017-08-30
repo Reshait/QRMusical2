@@ -17,4 +17,13 @@ def stop_cam():
 		global_vars.message = 'Get close QR code to cam'
 		global_vars.cam = 1
 
-	
+
+@register.simple_tag
+def restart_game_vars():
+	print("Reset game's global vars")
+
+	global_vars.game_fail = 0
+	global_vars.game_success = 0
+	global_vars.game_initialized = False
+	global_vars.last_message = global_vars.message
+
