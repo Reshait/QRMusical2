@@ -27,11 +27,7 @@
 
 			<div style="width:200; overflow: hidden">
 			<h5>Show to cam <strong>{{ name_player }}</strong> QR codes</h5>
-			{% if image %}
 				<img src="{{ image }}" width="200">
-			{% else %}
-				<img src="/files/static/interrogation.png">
-			{% endif %}
 			</div>	
 		</div>
 	</div>
@@ -49,7 +45,10 @@
 				{% endif %}
 			</strong>
 			{% if message_alert == 'alert-danger' %}
-				The QR code "{{ message_text }}" does not exist.
+				The QR code "{{ message_text }}" does not exist, is not an {{ name_player }} or has already been counted. 
+				<strong>Please trye another one.</strong>
+			{% elif message_alert == 'alert-success' %}
+				The QR code <strong>{{ message_text }}</strong> is a <strong>{{ name_player }}</strong>.
 			{% else %}
 				{{ message_text }}
 			{% endif %}

@@ -118,6 +118,8 @@ def game(id_player):
 	qrcode = global_vars.message[:-1] # del "\n" in end
 
 	matching = False
+
+	context = {}
 	
 	for obj in global_vars.game_objects:
 		if "images" == qrcode.split('/')[0]:
@@ -129,42 +131,36 @@ def game(id_player):
 				
 		url = url[6:]  # del "files/" of url
 		
-		if url == qrcode:
+		if url == qrcode: # Match OK
 			global_vars.game_success +=1
 			global_vars.game_objects.remove(obj)
 			print("ACIERTO!!!!===================================\n%s__\n%s" % (url, global_vars.message))
 			global_vars.last_message = global_vars.message
 			matching = True
+			global_vars.message_alert = "alert-success"
+			global_vars.game_image = ('/%s%s') % (settings.MEDIA_URL,obj.image.url[6:])
+#			global_vars.game_image = ('/%s%s') % (settings.MEDIA_URL,url)
 	
-	if global_vars.last_message != global_vars.message and matching == False:
+	if global_vars.last_message != global_vars.message and matching == False: # Doesnt match
 		global_vars.game_fail += 1
 		global_vars.last_message = global_vars.message
-		
-		
+		global_vars.message_alert = "alert-danger"
+
+	return context
+					
 		
 def player_game(request, id_player):	
 	player = Player.objects.get(id=id_player)
-
-	context = {'message_alert' : "alert-info"}
 
 	start_cam()
 
 	print(global_vars.message)
 
-	url = global_vars.message
-	url = url[1:-1] 					#-1 is for delete \n
-
 	game(id_player)
-	
-	if global_vars.message != "Get close QR code to cam":
-		path = settings.MEDIA_ROOT+'%s' % (url)
-		
-		if os.path.exists(path):
-			context['message_alert'] = "alert-success"
-			context['image'] = settings.MEDIA_URL+'%s' % (url)
-		else:
-			context['message_alert'] = "alert-danger"
 
+#	context = image_and_message_control()
+	context = {'message_alert' : global_vars.message_alert}	
+	context['image'] = global_vars.game_image
 	context['message_text'] = global_vars.message
 	context['title'] = "%s Player Game" % player.name
 	context['subtitle'] = "Select a list of songs"
@@ -175,9 +171,8 @@ def player_game(request, id_player):
 	context['game_points'] = global_vars.game_points
 	context['game_number_objects'] = global_vars.game_number_objects
 	
-	
 	return render(request, 'player_game.html', context)
-	#return HttpResponseRedirect('/play/songs_list/%s/player_game/' % id_player)
+
 
 # ======== Login zone ========
 def Login(request):    
