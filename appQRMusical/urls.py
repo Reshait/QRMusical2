@@ -35,5 +35,8 @@ urlpatterns = [
 	url(r'^settings/players_list/(?P<id>\d+)/add_multimedia_to_player/$', views.add_multimedia_to_player, name='add_multimedia_to_player'), 
 	url(r'^settings/players_list/(?P<id_player>\d+)/add_multimedia_to_player/(?P<id_multimedia>\d+)/$', views.add_multimedia_to_player_function, name='add_multimedia_to_player_function'), 
 	url(r'^settings/players_list/(?P<id_player>\d+)/update/(?P<id_multimedia>\d+)/$', views.del_multimedia_of_player_function, name='del_multimedia_of_player_function'), 
+	# Settigns - Camera
+	url(r'^settings/camera/$', views.camera, name='camera'), 
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

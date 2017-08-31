@@ -1,0 +1,32 @@
+{% extends "body.html" %}
+
+{% block content_wrapper %}
+<a href="{% url 'settings' %}">
+    <div>
+        <p>← Back</p>
+    </div>
+</a>
+<div style='text-align:center; margin: 0 auto; width: 90%'>
+
+    <h1 class="page-header">Set camera</h1>
+
+    <div class="jumbotron">
+        <h2 class="form-signin-heading">Camera Values</h2>
+
+        <form id="login_form" method="post" action="{% url 'camera' %}" class="form-signin">
+            {% csrf_token %}
+            <p style="color: #333 !important;">Width:</p><input class="form-control" placeholder="Width" type="number" name="Width" value="{{ cam_width }}" size="50" required autofocus="" min="160" max="640"/>
+            <br />
+            <p style="color: #333 !important;">Height:</p> <input class="form-control" placeholder="Height" type="number" name="Height" value="{{ cam_height }}" size="50" min="120" max="480"/>
+            <br />
+            <p style="color: #333 !important;">Refresh time(ms):</p> <input class="form-control" placeholder="Refresh" type="number" name="Refresh" value="{{ cam_refresh }}" size="50" min="500" max="4000" />
+            <br />
+            <input class="btn btn-primary" type="submit" value="Enviar" />
+        </form>
+    </div>
+
+</div>
+
+{% include "message.html" %}
+
+{% endblock content_wrapper %}

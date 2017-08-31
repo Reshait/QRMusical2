@@ -363,12 +363,6 @@ def upload_multimedia(request):
 			file_up.save()
 			file_up.players = dict(request.POST.iterlists())['players']
 
-			print("R_POST-------\n%s" % dict(request.POST.iterlists())['players'])
-			print("R_POST-------\n%s" % request.POST)
-
-			print("La VAR-------\n%s" % file_up.players)
-			print("REQUES-------\n%s" % request.POST['players'])
-
 			context['message_alert'] = "alert-success"
 			context['message_head'] = "Success! "
 			context['message_text'] = "File \"%s\" upload success" % (file_up.name)
@@ -510,4 +504,38 @@ def del_multimedia_of_player_function(request, id_player, id_multimedia):
 	return HttpResponseRedirect('/settings/players_list/%s/update/' % id_player)
 
 
+@login_required(login_url='login')
+def camera(request):    
+	cam_width = global_vars.cam_width
+	cam_height = global_vars.cam_height
+	cam_refresh = global_vars.cam_refresh
+
+	message_alert = 'alert-info'
+	message_head = 'Info!'
+	message_text = 'Configure the values of camera.' 
+
+	if request.method == 'POST':
+
+		cam_width = request.POST.get('Width')
+		cam_height = request.POST.get('Height')
+		cam_refresh = request.POST.get('Refresh')
+
+		global_vars.cam_width = cam_width 
+		global_vars.cam_height = cam_height
+		global_vars.cam_refresh = cam_refresh
+		
+		message_alert = 'alert-success'
+		message_head = 'Success!. '
+		message_text = 'Changes saved successfully'
+
+	context = {
+		'message_alert' : 	message_alert,
+		'message_head'	:	message_head,
+		'message_text'	:	message_text,
+		'cam_width'		:	cam_width,
+		'cam_height'	: 	cam_height,
+		'cam_refresh'	: 	cam_refresh,
+	}
+
+	return render(request, 'camera.html', context)  
 

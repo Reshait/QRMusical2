@@ -16,4 +16,7 @@ message_alert = "alert-info"
 game_image = "/files/static/Who.png"
 game_display = "none"
 fail_flag = False
+cam_width = 320
+cam_height = 240
+cam_refresh = 2000
 
