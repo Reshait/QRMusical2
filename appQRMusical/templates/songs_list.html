@@ -21,11 +21,13 @@
 				</thead>
 				<tbody>
 					{% for son in object_list %}
-						<tr onclick="document.location = '{% url 'player_game' son.id %}';">
-		      				<th scope="row">{{ son.id }}</th>
-		      				<td>{{ son.name }}</td>
-		      				<td>{{ son.description }}</td>
-		    			</tr>
+						{% if son.enabled %}
+							<tr onclick="document.location = '{% url 'player_game' son.id %}';">
+								<th scope="row">{{ son.id }}</th>
+								<td>{{ son.name }}</td>
+								<td>{{ son.description }}</td>
+							</tr>
+		    			{% endif %}
 					{% endfor %}
 				</tbody>
 			</table>
