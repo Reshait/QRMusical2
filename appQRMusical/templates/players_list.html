@@ -2,7 +2,11 @@
 {% extends "body.html" %}
 
 {% block content_wrapper %}
-
+<a href="{% url 'settings' %}">
+	<div>
+		<p>← Back</p>
+	</div>
+</a>
 <div class="col-sm-12 QRM_box {{QRM_color}}">
 	<div class="QRM_box_in">
 		<div class="QRM_wrapper_table">
@@ -12,6 +16,7 @@
 					<tr>
 						<th>#</th>
 						<th>Name</th>
+						<th></th>
 						<th>Description</th>
 						<th>Enable</th>	
 						<th>delete</th>						
@@ -19,12 +24,15 @@
 				</thead>
 				<tbody>
 					{% for object in object_list %}
-						<tr onclick="document.location = {% url 'update_player' object.id %};">
+						<tr onclick="document.location = '{% url 'update_player' object.id %}';">
 		      				<th scope="row" style="width: 3%;">{{ object.id }}</th>
 
 		      				<td style="width: 20%;">
 		      					{{ object.name }}
-								<a href="{% url 'update_player' object.id %}" class="btn btn-sm btn-default">Ver</a>
+		      				</td>
+
+		      				<td>
+								<a href="{% url 'update_player' object.id %}" class="btn btn-sm btn-default">Ver</a>		      				
 		      				</td>
 
 		      				<td style="width: 60%;">{{ object.description }}</td>

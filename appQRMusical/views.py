@@ -44,10 +44,12 @@ class Home(TemplateView):
 	template_name="home.html"
 	def get_context_data(self, **kwargs):
 		context = super(Home, self).get_context_data(**kwargs)
-		context['QRM_color'] = "QRM_gray"
+		context['QRM_color'] = "QRM_blue"
 		context['message_alert'] = "alert-info"
 		context['message_head'] = "Info, "
 		context['message_text'] = "welcome to QRMusical project, made by Teo."
+		context['title'] = "Welcome!"
+		context['subtitle'] = "Willkommen, Bienvenue, Benvenuti, Bienvenido, Namaste, karibu. Let's go to play!!"		
 		return context
 
 # ======== PLAY zone ========
@@ -165,7 +167,6 @@ def player_game(request, id_player):
 
 	game(id_player)
 
-#	context = image_and_message_control()
 	context = {'message_alert' : global_vars.message_alert}	
 	context['image'] = global_vars.game_image
 	context['message_text'] = global_vars.message
@@ -360,7 +361,13 @@ def upload_multimedia(request):
 			file_up.name = name
 			file_up.filetype = ext
 			file_up.save()
-			file_up.players = request.POST['players']
+			file_up.players = dict(request.POST.iterlists())['players']
+
+			print("R_POST-------\n%s" % dict(request.POST.iterlists())['players'])
+			print("R_POST-------\n%s" % request.POST)
+
+			print("La VAR-------\n%s" % file_up.players)
+			print("REQUES-------\n%s" % request.POST['players'])
 
 			context['message_alert'] = "alert-success"
 			context['message_head'] = "Success! "

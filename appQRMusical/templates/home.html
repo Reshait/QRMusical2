@@ -13,13 +13,14 @@
 					<h5>Play</h5>
 				</div>
 			</a>
-
-			<a href="{% url 'settings' %}">
-				<div class="QRM_btn QRM_btn_home">
-					<img src="/files/static/setting.png">
-					<h5>Settings</h5>
-				</div>
-			</a>
+			{% if user.is_authenticated %}
+				<a href="{% url 'settings' %}">
+					<div class="QRM_btn QRM_btn_home">
+						<img src="/files/static/setting.png">
+						<h5>Settings</h5>
+					</div>
+				</a>
+			{% endif %}
 
 		</div>
 	</div>

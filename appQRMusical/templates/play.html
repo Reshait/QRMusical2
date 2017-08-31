@@ -2,7 +2,11 @@
 {% extends "body.html" %}
 
 {% block content_wrapper %}
-
+<a href="{% url 'home' %}">
+	<div>
+		<p>← Back</p>
+	</div>
+</a>
 <div class="col-sm-12 QRM_box {{QRM_color}}">
 	<div class="QRM_box_in">
 		<div style='text-align:center; margin: 0 auto; width: 90%'>
@@ -14,15 +18,6 @@
 				</div>
 			</a>
 
-
-<!--
-			<a href="{% url 'home' %}">
-				<div class="QRM_btn QRM_btn_home">
-					<img src="/files/static/setting.png">
-					<h5>Settings</h5>
-				</div>
-			</a>
--->
 		</div>
 	</div>
 </div>
