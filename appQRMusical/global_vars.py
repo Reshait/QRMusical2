@@ -14,6 +14,7 @@ game_initialized = False
 game_number_objects = -1
 message_alert = "alert-info"
 game_image = "/files/static/Who.png"
+game_file = ""
 game_display = "none"
 fail_flag = False
 cam_width = 320
