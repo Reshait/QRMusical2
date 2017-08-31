@@ -1,5 +1,5 @@
 from django.conf.urls import include, url
-from appQRMusical.views import Home, Settings, Play, Songs, Gallery, Multimedia_detail, Multimedia_delete, Players_list, Update_player, Create_player
+from appQRMusical.views import Home, Settings, Play, Songs, Gallery, Multimedia_detail, Multimedia_delete, Players_list, Update_player, Create_player, Multimedia_update
 from . import views
 
 # For load images in dev mode
@@ -26,6 +26,7 @@ urlpatterns = [
 	# Settings - Gallery
 	url(r'^settings/gallery/$', Gallery.as_view(), name='gallery'), 
 	url(r'^settings/gallery/multimedia_detail/(?P<pk>\d+)/$', Multimedia_detail.as_view(), name='multimedia_detail'), 
+	url(r'^settings/gallery/multimedia_update/(?P<pk>\d+)/$', Multimedia_update.as_view(), name='multimedia_update'), 	
 	url(r'^settings/gallery/(?P<pk>\d+)/delete/$', Multimedia_delete.as_view(), name='multimedia_delete'), 	
 	url(r'^settings/gallery/upload/$', views.upload_multimedia, name='upload_multimedia'), 
 	# Settings - Play

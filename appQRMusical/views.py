@@ -293,7 +293,7 @@ class Multimedia_detail(LoginRequiredMixin, DetailView):
 		join_thumbnails(img_thumb, imgQR)
 
 		return context
-
+	
 
 def square_thumbnail(url):
 	thumb_size =300, 300
@@ -373,6 +373,17 @@ def upload_multimedia(request):
 	return render(request, 'upload.html', context)	
 
 
+class Multimedia_update(LoginRequiredMixin, UpdateView):
+	model = Multimedia
+	fields = ['file', 'image', 'players']
+	template_name = 'upload.html'
+	login_url='/login/'
+	redirect_field_name = "/login/"
+
+	def get_success_url(self):
+		return reverse('multimedia_update', kwargs={'pk': self.object.id})
+
+
 class Multimedia_delete(DeleteView):
 	model = Multimedia
 	success_url = '/settings/gallery'
@@ -399,6 +410,7 @@ class Players_list(LoginRequiredMixin, ListView):
 	template_name="players_list.html"
 	login_url='/login/'
 	redirect_field_name = "/login/"
+
 	def get_context_data(self, **kwargs):
 		context = super(Players_list, self).get_context_data(**kwargs)
 		context['QRM_color'] = "QRM_orange"

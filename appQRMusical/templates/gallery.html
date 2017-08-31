@@ -26,7 +26,7 @@
 				</thead>
 				<tbody>
 					{% for son in object_list %}
-						<tr onclick="document.location = '/';">
+						<tr onclick="document.location = '{% url 'multimedia_update' son.id %}';">
 		      				<th scope="row" style="width: 3%;">{{ son.id }}</th>
 		      				<td style="width: 10%;"><img src="/{{ son.image.url }}" style="width: 100px;"></td>
 		      				<td style="width: 30%;">{{ son.name }}</td>
