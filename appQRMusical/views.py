@@ -81,9 +81,7 @@ class Songs(ListView):
 
 
 def message(request):
-#	global_vars.message
 	context = {'glob_message' : global_vars.message,}
-#	return render(request, 'glob_message.html', context)
 
 
 def read_code():
@@ -140,14 +138,12 @@ def game(id_player):
 			if url == qrcode: # Match OK
 				global_vars.game_success +=1
 				global_vars.game_objects.remove(obj)
-				print("ACIERTO!!!!===================================\n%s__\n%s" % (url, global_vars.message))
 				global_vars.last_message = global_vars.message
 				matching = True
 				global_vars.message_alert = "alert-success"
 				global_vars.game_image = ('/%s%s') % (settings.MEDIA_URL,obj.image.url[6:])
 				if obj.file:
 					global_vars.game_file = obj.file.url
-					#global_vars.game_last_image = global_vars.game_image
 		
 		if global_vars.last_message != global_vars.message and matching == False: # Doesnt match
 			global_vars.game_fail += 1
