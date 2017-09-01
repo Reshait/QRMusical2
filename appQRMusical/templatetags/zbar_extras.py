@@ -29,6 +29,7 @@ def restart_game_vars():
 	global_vars.message_alert = "alert-info"
 	global_vars.game_image = "/files/static/Who.png"
 	global_vars.game_image = ""
+	global_vars.game_file = ""
 	global_vars.game_display = "none"
 
 

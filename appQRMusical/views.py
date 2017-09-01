@@ -145,12 +145,9 @@ def game(id_player):
 				matching = True
 				global_vars.message_alert = "alert-success"
 				global_vars.game_image = ('/%s%s') % (settings.MEDIA_URL,obj.image.url[6:])
-#				if obj.file and global_vars.game_last_image != global_vars.game_image:
-#					command = 'mplayer %s%s' % (settings.MEDIA_ROOT,obj.file.url[6:])
-#					print('==========================================\n%s' % command)
-#					t = threading.Thread(os.system(command))
-#					t.start()
-#					global_vars.game_last_image = global_vars.game_image
+				if obj.file:
+					global_vars.game_file = obj.file.url
+					#global_vars.game_last_image = global_vars.game_image
 		
 		if global_vars.last_message != global_vars.message and matching == False: # Doesnt match
 			global_vars.game_fail += 1

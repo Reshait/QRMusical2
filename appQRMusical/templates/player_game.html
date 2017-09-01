@@ -37,17 +37,19 @@
 			</div>
 
 			<div style="width:200; overflow: hidden">
-			<h5>Show to cam <strong>{{ name_player }}</strong> QR codes</h5>
+				<h5>Show to cam <strong>{{ name_player }}</strong> QR codes</h5>
 				<img src="{{ image }}" width="200">
+
+				<div>
+					{% if file %}
+						<a href="/{{ file }}" target="_blank" class="btn btn-default">play file</a>
+					{% endif %}
+				</div>
+				
 			</div>	
-<!--
-				{% if file %}
-					<audio controls style="width: 100%;">
-					<source src="/{{ file.url }}" type="audio/mp3">
-					Your browser does not support the audio element.
-					</audio>
-				{% endif %}
--->
+			
+
+			
 		</div>
 	</div>
 	
