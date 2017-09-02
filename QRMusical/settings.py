@@ -124,3 +124,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = 'files/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'appQRMusical/files/')
+
+# EMAIL SETTINGS
+EMAIL_HOST = "mail.QRMusical.com"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = "admin@QRMusical.com"
+EMAIL_HOST_PASSWORD = "*******"
+EMAIL_USE_TLS = True
