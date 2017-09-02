@@ -371,7 +371,7 @@ def upload_multimedia(request):
 
 class Multimedia_update(LoginRequiredMixin, UpdateView):
 	model = Multimedia
-	fields = ['file', 'image', 'players']
+	form_class = UploadMultimediaForm
 	template_name = 'upload.html'
 	login_url='/login/'
 	redirect_field_name = "/login/"
