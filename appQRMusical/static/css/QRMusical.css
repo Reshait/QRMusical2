@@ -2,6 +2,7 @@
     font-size: 18px;
     color: #262626;
     font-weight: bold;
+	margin-bottom: 0px !important;    
 }
 .QRM_navbar_nav{
 	float:right;
@@ -12,7 +13,7 @@
 }
 
 .QRM_container{
-	padding: 40px 0px 20px 0px;
+	padding: 20px 0px 0px 0px;
 }
 
 .QRM_box{
@@ -220,4 +221,68 @@ td{
 
 th{
 	text-align: -webkit-center;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.input[type="button" i]{
+    border-radius: 0 3px 3px 0;
+    background-color: #607D8B;
+    color: white;
+    border: 1px transparent;
+    padding: 8px;
+}
+
+.effect2
+{
+  position: relative;
+}
+.effect2:before, .effect2:after
+{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  -webkit-box-shadow: 0 15px 10px #777;
+  -moz-box-shadow: 0 15px 10px #777;
+  box-shadow: 0 15px 10px #777;
+  -webkit-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -o-transform: rotate(-3deg);
+  -ms-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+.effect2:after
+{
+  -webkit-transform: rotate(3deg);
+  -moz-transform: rotate(3deg);
+  -o-transform: rotate(3deg);
+  -ms-transform: rotate(3deg);
+  transform: rotate(3deg);
+  right: 10px;
+  left: auto;
 }

@@ -38,8 +38,11 @@
 
 			<div style="width:200; overflow: hidden">
 				<h5>Show to cam <strong>{{ name_player }}</strong> QR codes</h5>
-				<img src="{{ image }}" width="200">
-
+				{% if not image %}
+					<img src="/files/static/Who.png" width="200" title="Who" alt="Who">		
+				{% else %}
+					<img src="{{ image }}" width="200">
+				{% endif %}
 				<div>
 					{% if file %}
 						<a href="/{{ file }}" target="_blank" class="btn btn-default">play file</a>
