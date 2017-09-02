@@ -1,5 +1,5 @@
 from django.conf.urls import include, url
-from appQRMusical.views import Home, Settings, Play, Songs, Gallery, Multimedia_detail, Multimedia_delete, Players_list, Update_player, Create_player, Multimedia_update, Player_delete
+from appQRMusical.views import Home, Settings, Play, Songs, Gallery, Multimedia_detail, Multimedia_delete, Players_list, Update_player, Create_player, Multimedia_update, Player_delete, User
 from . import views
 
 # For load images in dev mode
@@ -19,7 +19,7 @@ urlpatterns = [
 
     # Login
 	url(r'^login/$', views.Login, name='login'),
-	url(r'^logout/$', views.Logout, name='logout'), 
+	url(r'^logout/$', views.Logout, name='logout'), 	
 
 	# Settings
 	url(r'^settings/$', Settings.as_view(), name='settings'), 
@@ -39,6 +39,10 @@ urlpatterns = [
 	url(r'^settings/players_list/(?P<id_player>\d+)/update/(?P<id_multimedia>\d+)/$', views.del_multimedia_of_player_function, name='del_multimedia_of_player_function'), 
 	# Settigns - Camera
 	url(r'^settings/camera/$', views.camera, name='camera'), 
+	# Settigns - User	
+	url(r'^settings/user/$', User.as_view(), name='user'), 
+	url(r'^settings/user/edit_email/$', views.edit_email, name='edit_email'), 
+	url(r'^settings/user/edit_password/$', views.edit_password, name='edit_password'), 
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

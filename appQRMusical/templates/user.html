@@ -1,0 +1,33 @@
+{% extends "body.html" %}
+
+{% block content_wrapper %}
+<a href="{% url 'home' %}">
+	<div>
+		<p>← Back</p>
+	</div>
+</a>
+<div class="col-sm-12 QRM_box {{QRM_color}}">
+	<div class="QRM_box_in">
+		<div style='text-align:center; margin: 0 auto; width: 90%'>
+
+			<a href="{% url 'edit_email' %}">
+				<div class="QRM_btn QRM_btn_home">
+					<img src="/files/static/editEmail.png">
+					<h5>Edit eMail</h5>
+				</div>
+			</a>
+
+			<a href="{% url 'edit_password' %}">
+				<div class="QRM_btn QRM_btn_home">
+					<img src="/files/static/editPass.png">
+					<h5>Edit Password</h5>
+				</div>
+			</a>
+
+		</div>
+	</div>
+</div>
+
+{% include "message.html" %}
+
+{% endblock content_wrapper %}

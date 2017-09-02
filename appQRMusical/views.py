@@ -32,11 +32,11 @@ from django.core.urlresolvers import reverse_lazy
 #Player Game
 import threading
 import subprocess
-
-
 from django.core.urlresolvers import reverse
 
-
+# User Settings
+from .forms import EditEmailForm, EditPassForm
+from django.contrib.auth.hashers import make_password
 
 
 # Create your views here.
@@ -560,3 +560,62 @@ def camera(request):
 
 	return render(request, 'camera.html', context)  
 
+
+class User(LoginRequiredMixin, TemplateView):
+	template_name="user.html"
+	login_url='/login/'
+	redirect_field_name = "/login/"
+	success_url = reverse_lazy('user')
+	def get_context_data(self, **kwargs):
+		context = super(User, self).get_context_data(**kwargs)
+		context['QRM_color'] = "QRM_orange"
+		context['message_alert'] = "alert-info"
+		context['message_head'] = "Info, "
+		context['message_text'] = "Edit password or email"
+		context['title'] = "User!"
+		context['subtitle'] = "Settings in user"		
+		return context
+
+
+@login_required(login_url='login')
+def edit_email(request):
+	context = {
+		'message_alert' : 'alert-info',
+		'message_head' : 'Info!',
+		'message_text' : 'Change your mail.' 
+	}
+
+	if request.method == 'POST':
+		context['form'] = EditEmailForm(request.POST, request=request)
+		if context['form'].is_valid():
+			request.user.email = context['form'].cleaned_data['email']
+			request.user.save()
+			context['message_alert'] = 'alert-success'
+			context['message_head'] = 'Success!!. '
+			context['message_text'] = 'Changes saved successfully'
+	else:
+		context['form'] = EditEmailForm(
+		request=request,
+		initial={'email': request.user.email})
+	return render(request, 'userForms.html', context)
+
+
+@login_required(login_url='login')
+def edit_password(request):
+	context = {
+		'message_alert' : 'alert-info',
+		'message_head' : 'Info!',
+		'message_text' : 'Change your password.' 
+	}	
+
+	if request.method == 'POST':
+		context['form'] = EditPassForm(request.POST)
+		if context['form'].is_valid():
+			request.user.password = make_password(context['form'].cleaned_data['password'])
+			request.user.save()
+			context['message_alert'] = 'alert-success'
+			context['message_head'] = 'Success!!. '
+			context['message_text'] = 'Changes saved successfully'
+	else:
+		context['form'] = EditPassForm()
+	return render(request, 'userForms.html', context) 
