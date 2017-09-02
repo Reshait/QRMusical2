@@ -15,8 +15,8 @@
 				<thead>
 					<tr>
 						<th>#</th>
+						<th>Image</th>
 						<th>Name</th>
-						<th></th>
 						<th>Description</th>
 						<th>Enable</th>	
 						<th>delete</th>						
@@ -25,28 +25,34 @@
 				<tbody>
 					{% for object in object_list %}
 						<tr onclick="document.location = '{% url 'update_player' object.id %}';">
-		      				<th scope="row" style="width: 3%;">{{ object.id }}</th>
+		      				<th scope="row" style="width: 3%; vertical-align: middle;">{{ object.id }}</th>
 
-		      				<td style="width: 20%;">
-		      					{{ object.name }}
+		      				<td style="width: 10%; vertical-align: middle;">
+								{% if object.image %}
+			      					<img src="/{{ object.image.url }}" style="width: 100px;">
+								{% endif %}
+		      				</td>	
+
+		      				<td style="width: 20%; vertical-align: middle;">
+		      					{{ object.name }}  					
 		      				</td>
-
+<!--
 		      				<td>
 								<a href="{% url 'update_player' object.id %}" class="btn btn-sm btn-default">Ver</a>		      				
 		      				</td>
-
-		      				<td style="width: 60%;">{{ object.description }}</td>
+-->
+		      				<td style="width: 60%; vertical-align: middle;">{{ object.description }}</td>
 							
-							<td>
+							<td style=" vertical-align: middle;"> 
 								<center>
-								<p>{% if object.enabled %}YES{% else %}NO{% endif %}</p>
+								<p>{% if object.enabled %}<strong style="color:green">YES</strong>{% else %}NO{% endif %}</p>
 
 
 								</center>
 							</td>
 							
-							<td>
-								<form action="{% url 'multimedia_delete' object.id %}" method="post">
+							<td style=" vertical-align: middle;">
+								<form action="{% url 'player_delete' object.id %}" method="post">
 									{% csrf_token %}
 									<center>
 										<input type="hidden" name="object_id" value="{{ object.id }}"/>

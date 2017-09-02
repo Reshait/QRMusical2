@@ -20,10 +20,11 @@ class UploadMultimediaForm(forms.ModelForm):
 class UploadPlayerForm(forms.ModelForm):	
 	class Meta:
 		model = Player
-		fields = ['name', 'description', 'enabled']
+		fields = ['name', 'description', 'image', 'enabled']
 
 	def __init__(self, *args, **kwargs):
 		super(UploadPlayerForm, self).__init__(*args, **kwargs)
 		self.fields['name'].widget.attrs.update({'class' : 'form-control'})
 		self.fields['description'].widget.attrs.update({'class' : 'form-control'})
+		self.fields['image'].widget.attrs.update({'class' : 'form-control btn btn-default btn-file'})		
 		self.fields['enabled'].widget.attrs.update({'class' : 'custom-control-input'})

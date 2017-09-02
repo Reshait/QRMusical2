@@ -392,7 +392,7 @@ class Multimedia_delete(DeleteView):
 
 		path_image = join_url_with_media_root(obj.image.url)
 		os.remove(path_image)
-		return obj	
+		return obj			
 
 
 def join_url_with_media_root(url):
@@ -428,6 +428,8 @@ class Update_player(LoginRequiredMixin, UpdateView):
 
 	def get_context_data(self, **kwargs):
 		context = super(Update_player, self).get_context_data(**kwargs)
+		if self.object.image:
+			print("=============\n%s" % self.object.image.url)
 		context['QRM_color'] = "QRM_orange"
 		context['message_alert'] = "alert-info"
 		context['message_head'] = "Info, "
@@ -459,6 +461,17 @@ class Create_player(LoginRequiredMixin, CreateView):
 		context['songs'] = Multimedia.objects.filter(players__in=[self.object])
 		context['btn_label'] = "Create"
 		return context
+
+
+class Player_delete(DeleteView):
+	model = Player
+	success_url = '/settings/players_list/'
+	def get_object(self):
+		obj = super(Player_delete, self).get_object()
+
+		path_image = join_url_with_media_root(obj.image.url)
+		os.remove(path_image)
+		return obj	
 
 
 @login_required(login_url='login')

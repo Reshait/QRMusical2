@@ -15,6 +15,7 @@
 				<thead>
 					<tr>
 						<th>#</th>
+						<th>Image</th>						
 						<th>List Name</th>
 						<th>Description</th>						
 			    	</tr>
@@ -23,9 +24,14 @@
 					{% for son in object_list %}
 						{% if son.enabled %}
 							<tr onclick="document.location = '{% url 'player_game' son.id %}';">
-								<th scope="row">{{ son.id }}</th>
-								<td>{{ son.name }}</td>
-								<td>{{ son.description }}</td>
+								<th scope="row" style="vertical-align: middle;">{{ son.id }}</th>
+			      				<td style="width: 10%; vertical-align: middle;">
+									{% if son.image %}
+				      					<img src="/{{ son.image.url }}" style="width: 100px;">
+									{% endif %}
+			      				</td>								
+								<td style="vertical-align: middle;">{{ son.name }}</td>
+								<td style="vertical-align: middle;">{{ son.description }}</td>
 							</tr>
 		    			{% endif %}
 					{% endfor %}
