@@ -38,7 +38,7 @@ class Multimedia(models.Model):
 	image = models.ImageField(upload_to='images/')
 	filetype = models.CharField(max_length=3)
 	datetime = models.DateTimeField(auto_now_add=True)
-	players = models.ManyToManyField(Player)
+	players = models.ManyToManyField(Player, blank=True)
 
 	class Meta:
 		ordering = ('datetime',)

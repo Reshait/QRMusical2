@@ -357,7 +357,9 @@ def upload_multimedia(request):
 			file_up.name = name
 			file_up.filetype = ext
 			file_up.save()
-			file_up.players = dict(request.POST.iterlists())['players']
+
+			if 'players' in dict(request.POST.iterlists()):
+				file_up.players = dict(request.POST.iterlists())['players']
 
 			context['message_alert'] = "alert-success"
 			context['message_head'] = "Success! "
