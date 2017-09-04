@@ -119,7 +119,7 @@ def game(id_player):
 
 	matching = False
 
-#	context = {}
+	context = {}
 
 	if global_vars.game_success == global_vars.game_number_objects:
 		global_vars.game_display = "inline"
@@ -136,7 +136,7 @@ def game(id_player):
 			url = url[6:]  # del "files/" of url
 			
 			if url == qrcode: # Match OK
-				global_vars.game_reload = False
+#				global_vars.game_reload = False
 				global_vars.game_success +=1
 				global_vars.game_objects.remove(obj)
 				global_vars.last_message = global_vars.message
@@ -151,7 +151,7 @@ def game(id_player):
 			global_vars.last_message = global_vars.message
 			global_vars.message_alert = "alert-danger"
 	
-#	return context
+	return context
 					
 		
 def player_game(request, id_player):	

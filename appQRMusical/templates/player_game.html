@@ -88,15 +88,24 @@
 <script src="{% static 'js/jquery.min.js' %}"></script>	
 
 <script type="text/javascript">
-	
+
     function update_message_home(){
-    	if({{ global_vars.game_reload }} == "True"){
         	$('#auto').load('{% url 'player_game' id_player %} #auto');
-    	}
     }
-    setInterval( "update_message_home()", {{ cam_refresh }} );
+   
+    setInterval( "update_message_home()", 2000 );
     
 </script>
-<!--
+
 HASTA AQUÍ -->
+<!--
+<script type="text/javascript">
+	
+    function update_message_home(){
+        	$('#auto').load('{% url 'player_game' id_player %} #auto');
+    }
+    setInterval( "update_message_home()", 2000 );
+    
+</script>
+-->
 {% endblock content_wrapper %}
