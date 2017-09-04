@@ -136,6 +136,7 @@ def game(id_player):
 			url = url[6:]  # del "files/" of url
 			
 			if url == qrcode: # Match OK
+				global_vars.game_reload = False
 				global_vars.game_success +=1
 				global_vars.game_objects.remove(obj)
 				global_vars.last_message = global_vars.message

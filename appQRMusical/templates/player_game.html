@@ -46,6 +46,10 @@
 				<div>
 					{% if file %}
 						<a href="/{{ file }}" target="_blank" class="btn btn-default">play file</a>
+      					<audio controls style="width: 100%;">
+							<source src="/{{ file }}" type="audio/mp3">
+							Your browser does not support the audio element.
+						</audio>						
 					{% endif %}
 				</div>
 				
@@ -86,9 +90,11 @@
 <script type="text/javascript">
 	
     function update_message_home(){
-        $('#auto').load('{% url 'player_game' id_player %} #auto');
+    	if({{ global_vars.game_reload }} == "True"){
+        	$('#auto').load('{% url 'player_game' id_player %} #auto');
+    	}
     }
-    setInterval( "update_message_home()", 2000 );
+    setInterval( "update_message_home()", {{ cam_refresh }} );
     
 </script>
 <!--

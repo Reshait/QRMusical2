@@ -17,6 +17,7 @@ game_image = "/files/static/Who.png"
 game_last_image = ""
 game_file = ""
 game_display = "none"
+game_reload = "True"
 fail_flag = False
 cam_width = 320
 cam_height = 240
