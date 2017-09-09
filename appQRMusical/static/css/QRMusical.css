@@ -175,6 +175,13 @@ svg:hover #play{
     z-index:9999    
 }
 
+.QRM_logo{
+    width: 60px; 
+    top: -5px; 
+    position: relative; 
+    display: inline-block !important;
+}
+
 h1 {
 	font-size: 32px;
 	line-height: 1.5;

@@ -75,7 +75,7 @@ class Songs(ListView):
 		context['message_alert'] = "alert-info"
 		context['message_head'] = "Info, "
 		context['message_text'] = "Select a songs list."
-		context['title'] = "Songs list"
+		context['title'] = "Interactive player list"
 		context['subtitle'] = "Select a list of songs"
 		return context
 
