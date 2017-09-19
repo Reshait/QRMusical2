@@ -1,5 +1,5 @@
 .QRM_nav{
-    font-size: 18px;
+    font-size: 16px;
     color: #262626;
     font-weight: bold;
 	margin-bottom: 0px !important;    
@@ -9,7 +9,7 @@
 }
 
 .QRM_navbar-brand{
-	font-size: 45px;
+	font-size: 35px;
 }
 
 .QRM_container{
@@ -20,9 +20,9 @@
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 20px;
-	padding: 25px;
+	padding: 15px;
 	text-align: center;
-	font-size: 24px;
+	font-size: 18px;
 	line-height: 36px;
 	-webkit-transition-duration: 0.4s;
 	transition-duration: 0.4s;
@@ -36,7 +36,7 @@
 /*	min-height: 300px; */
 	color: #fff;
 
-	padding: 20px;
+/*	padding: 20px; */
 }
 
 .QRM_svg{
@@ -141,6 +141,10 @@ svg:hover #play{
 	fill:black;
 }
 
+.QRM_btn_image{
+    width: 100px;
+}
+
 .QRM_wrapper_table{
     padding: 1.5rem;
     margin-right: 0;
@@ -149,10 +153,13 @@ svg:hover #play{
     border-width: .2rem;
     position: relative;
     padding: 1rem;
-    margin: 1rem -1rem;
     border: solid #f7f7f9;	
     background-color: white;
-    border-radius: 5px;
+}
+
+.QRM_image_list{
+    width: 75px;
+    border-radius: 7px;
 }
 
 .QRM_supercool_window{
@@ -183,7 +190,7 @@ svg:hover #play{
 }
 
 h1 {
-	font-size: 32px;
+	font-size: 20px;
 	line-height: 1.5;
 	font-weight: 600;
 	color: #262626;
@@ -192,12 +199,12 @@ h1 {
 h2 {
 	font-weight: 300;
 	color: #262626;
-	font-size: 24px;
+	font-size: 18px;
 	line-height: 1.5;
 	margin: 0;
 }
 h5{
-	font-size: 18px !important;
+	font-size: 14px !important;
 	line-height: 26px;
 	font-weight: 600;
 	margin: 0;
@@ -228,7 +235,7 @@ p {
 }
 
 footer{
-	padding: 50px 0px 20px 0px;
+	padding: 10px 0px 20px 0px;
 }
 
 input{
