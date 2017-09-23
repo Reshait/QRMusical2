@@ -32,6 +32,9 @@ from django.core.urlresolvers import reverse_lazy
 #Player Game
 import threading
 import subprocess
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BOARD)
 from django.core.urlresolvers import reverse
 
 # User Settings
@@ -84,6 +87,67 @@ def message(request):
 	context = {'glob_message' : global_vars.message,}
 
 
+def blink(nTimes, speed, pin):
+	GPIO.setup(pin, GPIO.OUT)
+	for i in range(0, nTimes):
+		GPIO.output(pin, True)
+		time.sleep(speed)
+		GPIO.output(pin, False)
+		time.sleep(speed)
+	print("Blink finished")
+
+
+class Buzzer(object):
+	def __init__(self, buzzer_pin):
+		GPIO.setmode(GPIO.BOARD)  
+		self.buzzer_pin = buzzer_pin  
+		GPIO.setup(self.buzzer_pin, GPIO.IN)
+		GPIO.setup(self.buzzer_pin, GPIO.OUT)
+		print("buzzer ready")
+
+	def __del__(self):
+		class_name = self.__class__.__name__
+		print (class_name, "finished")
+
+	def buzz(self,pitch, duration):   		#create the function buzz and feed it the pitch and duration
+		if(pitch==0):
+			time.sleep(duration)
+			return
+		period = 1.0 / pitch     			#in physics, the period (sec/cyc) is the inverse of the frequency (cyc/sec)
+		delay = period / 2     				#calcuate the time for half of the wave  
+		cycles = int(duration * pitch)   	#the number of waves to produce is the duration times the frequency
+
+		for i in range(cycles):    			#start a loop from 0 to the variable cycles calculated above
+			GPIO.output(self.buzzer_pin, True)   #set pin 18 to high
+			time.sleep(delay)    			#wait with pin 18 high
+			GPIO.output(self.buzzer_pin, False)    #set pin 18 to low
+			time.sleep(delay)    			#wait with pin 18 low
+
+	def play(self, tune):
+		GPIO.setmode(GPIO.BOARD)
+		GPIO.setup(self.buzzer_pin, GPIO.OUT)
+		x=0
+
+		print("Playing tune ",tune)
+		if(tune==1): 	# Success
+			pitches=[523, 700, 1047]			
+			duration=[0.1,0.1,0.1]
+			for p in pitches:
+				self.buzz(p, duration[x])  #feed the pitch and duration to the func$
+				time.sleep(duration[x] *0.5)
+				x+=1
+
+		else: 			# Fail
+			pitches=[392,294]
+			duration=[0.1,0.1]
+			for p in pitches:
+				self.buzz(p, duration[x])  #feed the pitch and duration to the func$
+				time.sleep(duration[x] *0.5)
+				x+=1
+
+		GPIO.setup(self.buzzer_pin, GPIO.IN)
+
+
 def read_code():
 		data = global_vars.zbar_status.readline()
 		qrcode = str(data)[8:]
@@ -107,7 +171,7 @@ def start_cam():
 			t.start()	
 
 def game(id_player):
-	if global_vars.game_initialized == False: # First start of game
+	if global_vars.game_initialized == False: 	# First start of game
 		mults = Multimedia.objects.filter(players__in=Player.objects.filter(id = id_player))
 		global_vars.game_number_objects = mults.count()
 		mults = list(mults)
@@ -119,7 +183,6 @@ def game(id_player):
 
 	matching = False
 
-	context = {}
 
 	if global_vars.game_success == global_vars.game_number_objects:
 		global_vars.game_display = "inline"
@@ -133,9 +196,9 @@ def game(id_player):
 				if obj.file:
 					url = obj.file.url
 					
-			url = url[6:]  # del "files/" of url
+			url = url[6:]  			# del "files/" of url
 			
-			if url == qrcode: # Match OK
+			if url == qrcode: 		# Match OK
 				global_vars.game_success +=1
 				global_vars.game_objects.remove(obj)
 				global_vars.last_message = global_vars.message
@@ -144,14 +207,18 @@ def game(id_player):
 				global_vars.game_image = ('/%s%s') % (settings.MEDIA_URL,obj.image.url[6:])
 				if obj.file:
 					global_vars.game_file = obj.file.url
+				buzzer = Buzzer(8)						# Init Buzzer
+				blink(5, .05, 5)	# nTimes, speed, pin
+				buzzer.play(1)		# 1 --> Sucess melody
 		
 		if global_vars.last_message != global_vars.message and matching == False: # Doesnt match
 			global_vars.game_fail += 1
 			global_vars.last_message = global_vars.message
 			global_vars.message_alert = "alert-danger"
-	
-	return context
-					
+			buzzer = Buzzer(8)						# Init Buzzer
+			blink(5, .05, 7)	# nTimes, speed, pin
+			buzzer.play(2)		# 1 --> Sucess melody
+						
 		
 def player_game(request, id_player):	
 	player = Player.objects.get(id=id_player)

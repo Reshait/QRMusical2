@@ -182,6 +182,10 @@ svg:hover #play{
     z-index:9999    
 }
 
+.QRM_message_font{
+	font-size: 18px;
+}
+
 .QRM_logo{
     width: 60px; 
     top: -5px; 
