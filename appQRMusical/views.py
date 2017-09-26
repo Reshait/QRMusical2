@@ -32,9 +32,9 @@ from django.core.urlresolvers import reverse_lazy
 #Player Game
 import threading
 import subprocess
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 import time
-GPIO.setmode(GPIO.BOARD)
+# GPIO.setmode(GPIO.BOARD)
 from django.core.urlresolvers import reverse
 
 # User Settings
