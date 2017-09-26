@@ -93,7 +93,7 @@
 </div>
 
 <script src="{% static 'js/jquery.min.js' %}"></script>	
-
+<!--
 <script type="text/javascript">
 
     function update_message_home(){
@@ -103,6 +103,14 @@
     setInterval( "update_message_home()", 2000 );
     
 </script>
+-->
+<script type="text/javascript">
+	var a = '{{image}}';
+
+	alert(a);
+</script>
+
+
 <script type="text/javascript">
 	function windowpop(url, width, height) {
 		var leftPosition, topPosition;
@@ -118,7 +126,7 @@
 <script type="text/javascript">
 	function matchView(urlMatchView) {
 		var win;
-		var a = {{image.url}}
+		var a = '{{image}}';
 		win = window.open(urlMatchView, '_blank');
 		win.focus();
 		
