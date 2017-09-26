@@ -82,6 +82,9 @@ class Songs(ListView):
 		context['subtitle'] = "Select a list of songs"
 		return context
 
+class Match(TemplateView):
+	template_name="match_view.html"
+
 
 def message(request):
 	context = {'glob_message' : global_vars.message,}
@@ -197,6 +200,7 @@ def game(id_player):
 					url = obj.file.url
 					
 			url = url[6:]  			# del "files/" of url
+#			os.system('wmctrl -r zbar barcode reader -b add,above')
 			
 			if url == qrcode: 		# Match OK
 				global_vars.game_success +=1
@@ -207,17 +211,20 @@ def game(id_player):
 				global_vars.game_image = ('/%s%s') % (settings.MEDIA_URL,obj.image.url[6:])
 				if obj.file:
 					global_vars.game_file = obj.file.url
-				buzzer = Buzzer(8)						# Init Buzzer
-				blink(5, .05, 5)	# nTimes, speed, pin
-				buzzer.play(1)		# 1 --> Sucess melody
+#				buzzer = Buzzer(8)						# Init Buzzer
+#				blink(5, .05, 5)	# nTimes, speed, pin
+#				buzzer.play(1)		# 1 --> Sucess melody
+				print ("EL OBJ.ID VALE ------->>>> %s" % obj.id)
+#				return obj.id
+				return {'id_object': obj.id}
 		
 		if global_vars.last_message != global_vars.message and matching == False: # Doesnt match
 			global_vars.game_fail += 1
 			global_vars.last_message = global_vars.message
 			global_vars.message_alert = "alert-danger"
-			buzzer = Buzzer(8)						# Init Buzzer
-			blink(5, .05, 7)	# nTimes, speed, pin
-			buzzer.play(2)		# 1 --> Sucess melody
+#			buzzer = Buzzer(8)						# Init Buzzer
+#			blink(5, .05, 7)	# nTimes, speed, pin
+#			buzzer.play(2)		# 1 --> Sucess melody
 						
 		
 def player_game(request, id_player):	

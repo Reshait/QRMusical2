@@ -27,6 +27,7 @@
 
 	<div class="col-sm-12 QRM_box QRM_pink">
 		<div class="QRM_box_in">
+			
 			<div style="border-radius: 30px; border: 2px dashed; width: 50px; height: 50px; overflow: hidden; float: right;">
 				<div style=" font-weight: 300; font-size: 24px; margin: 0; margin-top: 10px; color: white !important;">
 					<p>{{ game_success }} | {{ game_number_objects }}</p>
@@ -43,10 +44,15 @@
 				{% else %}
 					<img src="{{ image }}" width="200" style="border-radius: 10px">
 				{% endif %}
+				
+				<h1>{{image}}</h1>
 				<div style="margin-top:10px">
 					{% if file %}
-					
+					<!--
 						<a href="/{{ file }}" target="_blank" class="btn btn-default" onclick="return windowpop(this.href, 545, 433)">play file</a>
+					-->	
+						<div class="btn btn-default" onclick="matchView('{% url 'match_view' id_player %}')">play file</div>
+						
 					<!--
       					<audio controls style="width: 200px;">
 							<source src="/{{ file }}" type="audio/mp3">
@@ -57,9 +63,7 @@
 				</div>
 				
 			</div>	
-			
-
-			
+				
 		</div>
 	</div>
 	
@@ -108,6 +112,24 @@
 		topPosition = (window.screen.height / 2) - ((height / 2) + 50);
 		//Open the window.
 		window.open(url, "Window2", "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no");
+	}
+</script>
+
+<script type="text/javascript">
+	function matchView(urlMatchView) {
+		var win;
+		var a = {{image.url}}
+		win = window.open(urlMatchView, '_blank');
+		win.focus();
+		
+		win.window.onload = function() {
+			win.document.getElementById("title").innerHTML = "HOLASSSSSSS";
+			win.document.getElementById("img").src = a;		
+			//win.document.getElementById("file").src = '/'+{{ file }};							
+		}
+		
+		alert(a);
+
 	}
 </script>
 

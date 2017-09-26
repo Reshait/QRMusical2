@@ -1,0 +1,74 @@
+
+{% extends "body.html" %}
+
+{% block content_wrapper %}
+
+{% load staticfiles %}
+
+<!--
+<a href="{% url 'songs_list' %}">
+	<div>
+		<p>← Back to songs list</p>
+	</div>
+</a>
+-->
+
+<div id="auto" >
+	
+	<div class="col-sm-12 QRM_box QRM_pink">
+		<div class="QRM_box_in">
+			<div style="border-radius: 30px; border: 2px dashed; width: 50px; height: 50px; overflow: hidden; float: right;">
+				<div style=" font-weight: 300; font-size: 24px; margin: 0; margin-top: 10px; color: white !important;">
+					<p>{{ game_success }} | {{ game_number_objects }}</p>
+				</div>
+				<div style="font-size: 10px;line-height: 12px;margin-top: 0px; color: #a94442;">
+					{{ game_fail }}
+				</div>
+			</div>
+
+			<div style="width:200; overflow: hidden">
+				<h5 id="title">Show to cam <strong>{{ name_player }}</strong> QR codes</h5>
+
+				<img id="img" src="" width="200" style="border-radius: 10px">
+			
+				<div style="margin-top:10px">
+      					<audio controls style="width: 200px;">
+							<source id="file" src="" type="audio/mp3">
+							Your browser does not support the audio element.
+						</audio>						
+				</div>
+				
+			</div>					
+		</div>
+	</div>
+	
+	
+	<div class="col-sm-12 QRM_box alert {{ message_alert }}">
+		<p>
+			<strong>
+				{% if message_alert == 'alert-info' %}
+					Info. 
+				{% elif message_alert == 'alert-success' %}
+					Succes!.
+				{% elif message_alert == 'alert-danger' %}
+					Error!.
+				{% endif %}
+			</strong>
+			{% if message_alert == 'alert-danger' %}
+				The QR code "{{ message_text }}" does not exist, is not an {{ name_player }} or has already been counted. 
+				<strong>Please try another one.</strong>
+			{% elif message_alert == 'alert-success' %}
+				The QR code <strong>{{ message_text }}</strong> is a <strong>{{ name_player }}</strong>.
+			{% else %}
+				{{ message_text }}
+			{% endif %}
+		</p>
+	</div>
+	
+</div>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>	
+
+
+
+{% endblock content_wrapper %}
