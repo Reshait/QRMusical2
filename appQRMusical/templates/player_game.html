@@ -45,20 +45,9 @@
 					<img src="{{ image }}" width="200" style="border-radius: 10px">
 				{% endif %}
 				
-				<h1>{{image}}</h1>
 				<div style="margin-top:10px">
 					{% if file %}
-					<!--
-						<a href="/{{ file }}" target="_blank" class="btn btn-default" onclick="return windowpop(this.href, 545, 433)">play file</a>
-					-->	
-						<div class="btn btn-default" onclick="matchView('{% url 'match_view' id_player %}')">play file</div>
-						
-					<!--
-      					<audio controls style="width: 200px;">
-							<source src="/{{ file }}" type="audio/mp3">
-							Your browser does not support the audio element.
-						</audio>						
-					-->
+						<a href="/{{ file }}" target="_blank" class="btn btn-default" >play file</a>					
 					{% endif %}
 				</div>
 				
