@@ -25,7 +25,7 @@
 		<div class="col-sm-2" style="display:inline"></div>
 	</div>
 
-	<div class="col-sm-12 QRM_box QRM_pink">
+	<div class="col-sm-12 QRM_box QRM_pink" id="media">
 		<div class="QRM_box_in">
 			
 			<div style="border-radius: 30px; border: 2px dashed; width: 50px; height: 50px; overflow: hidden; float: right;">
@@ -85,7 +85,17 @@
 
 <script type="text/javascript">
 
+    var old_value = null
+
     function update_message_home(){
+                $.get('http://172.21.148.70:5666/play/songs_list/1/player_game_matching/', function(data) {
+    if (old_value != data) {
+		old_value = data
+        $('#player').stop();
+		$('#media').load('http://172.21.148.70:5666/play/songs_list/1/player_game_matching/')
+	}
+})
+
         	$('#auto').load('{% url 'player_game' id_player %} #auto');
     }
    

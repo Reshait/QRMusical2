@@ -15,6 +15,7 @@ urlpatterns = [
 	url(r'^play/$', Play.as_view(), name='play'),	
 	url(r'^play/songs_list/$', Songs.as_view(), name='songs_list'),	
 	url(r'^play/songs_list/(?P<id_player>\d+)/player_game/$', views.player_game, name='player_game'),	
+	url(r'^play/songs_list/(?P<id_player>\d+)/player_game_matching/$', views.player_game_matching, name='player_game_matching'),	
 	url(r'^play/songs_list/(?P<id_player>\d+)/player_game/match_view$', Match.as_view(), name='match_view'),	
 
     # Login

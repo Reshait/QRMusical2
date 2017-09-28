@@ -250,6 +250,32 @@ def player_game(request, id_player):
 	
 	return render(request, 'player_game.html', context)
 
+def player_game_matching(request, id_player):
+
+        player = Player.objects.get(id=id_player)
+
+        start_cam()
+
+        print(global_vars.message)
+
+        game(id_player)
+
+        context = {'message_alert' : global_vars.message_alert}
+        context['image'] = global_vars.game_image
+        context['file'] = global_vars.game_file
+        context['message_text'] = global_vars.message
+        context['title'] = "%s Player Game" % player.name
+        context['subtitle'] = "Select a list of songs"
+        context['id_player'] = id_player
+        context['name_player'] = player.name
+        context['game_fail'] = global_vars.game_fail
+        context['game_success'] = global_vars.game_success
+        context['game_points'] = global_vars.game_points
+        context['game_number_objects'] = global_vars.game_number_objects
+        context['game_display'] = global_vars.game_display
+
+        return render(request, 'player_game_matching.html', context)
+
 
 # ======== Login zone ========
 def Login(request):    

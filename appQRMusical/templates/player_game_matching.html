@@ -1,0 +1,31 @@
+        <div class="col-sm-12 QRM_box QRM_pink" id="media">
+                <div class="QRM_box_in">
+                        
+                        <div style="border-radius: 30px; border: 2px dashed; width: 50px; height: 50px; overflow: hidden; float: right;">
+                                <div style=" font-weight: 300; font-size: 24px; margin: 0; margin-top: 10px; color: white !important;">
+                                        <p>{{ game_success }} | {{ game_number_objects }}</p>
+                                </div>
+                                <div style="font-size: 10px;line-height: 12px;margin-top: 0px; color: #a94442;">
+                                        {{ game_fail }}
+                                </div>
+                        </div>
+
+                        <div style="width:200; overflow: hidden">
+                                <h5>Show to cam <strong>{{ name_player }}</strong> QR codes</h5>
+                                {% if not image %}
+                                        <img src="/files/static/Who.png" width="200" title="Who" alt="Who">             
+                                {% else %}
+                                        <img src="{{ image }}" width="200" style="border-radius: 10px">
+                                {% endif %}
+                                
+                                <div style="margin-top:10px">
+                                        {% if file %}
+                                                <a href="/{{ file }}" target="_blank" class="btn btn-default" >play file</a>                                    
+                                        {% endif %}
+                                </div>
+                                
+                        </div>  
+                                
+                </div>
+        </div>
+
