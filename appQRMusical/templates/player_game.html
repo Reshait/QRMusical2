@@ -26,34 +26,38 @@
 	</div>
 
 	<div class="col-sm-12 QRM_box QRM_pink" id="media">
+<!-- Desde aquí -->
 		<div class="QRM_box_in">
-			
+		                
 			<div style="border-radius: 30px; border: 2px dashed; width: 50px; height: 50px; overflow: hidden; float: right;">
-				<div style=" font-weight: 300; font-size: 24px; margin: 0; margin-top: 10px; color: white !important;">
-					<p>{{ game_success }} | {{ game_number_objects }}</p>
-				</div>
-				<div style="font-size: 10px;line-height: 12px;margin-top: 0px; color: #a94442;">
-					{{ game_fail }}
-				</div>
+			        <div style=" font-weight: 300; font-size: 24px; margin: 0; margin-top: 10px; color: white !important;">
+			                <p>{{ game_success }} | {{ game_number_objects }}</p>
+			        </div>
+			        <div style="font-size: 10px;line-height: 12px;margin-top: 0px; color: #a94442;">
+			                {{ game_fail }}
+			        </div>
 			</div>
 
 			<div style="width:200; overflow: hidden">
-				<h5>Show to cam <strong>{{ name_player }}</strong> QR codes</h5>
-				{% if not image %}
-					<img src="/files/static/Who.png" width="200" title="Who" alt="Who">		
-				{% else %}
-					<img src="{{ image }}" width="200" style="border-radius: 10px">
-				{% endif %}
-				
-				<div style="margin-top:10px">
-					{% if file %}
-						<a href="/{{ file }}" target="_blank" class="btn btn-default" >play file</a>					
-					{% endif %}
-				</div>
-				
-			</div>	
-				
+			        <h5>Show to cam <strong>{{ name_player }}</strong> QR codes</h5>
+			        {% if not image %}
+			                <img src="/files/static/Who.png" width="200" title="Who" alt="Who">             
+			        {% else %}
+			                <img src="{{ image }}" width="200" style="border-radius: 10px">
+			        {% endif %}
+			        
+			        <div style="margin-top:10px">
+			                {% if file %}
+
+                                    <a id="file" href="/{{ file }}" target="_blank" class="btn btn-default" >play file</a>  
+                                                                                 
+			                {% endif %}
+			        </div>
+			        
+			</div>  
+			        
 		</div>
+<!-- Hasta aquí -->		
 	</div>
 	
 	
@@ -85,51 +89,34 @@
 
 <script type="text/javascript">
 
-    var old_value = null
+//    var old_value = null
+
+//	var flag_file = null;
 
     function update_message_home(){
-                $.get('http://172.21.148.70:5666/play/songs_list/1/player_game_matching/', function(data) {
-    if (old_value != data) {
-		old_value = data
-        $('#player').stop();
-		$('#media').load('http://172.21.148.70:5666/play/songs_list/1/player_game_matching/')
-	}
-})
+/*  	
+    	var file = document.getElementById('file')
+    	
+    	if(file != null && file != flag_file){
+    		flag_file = file;
+    		windows.open(file.href);
+    	}
+/*
 
-        	$('#auto').load('{% url 'player_game' id_player %} #auto');
-    }
+/*
+        $.get('{% url 'player_game_matching' id_player %}', function(data) {
+			if (old_value != data) {
+				old_value = data
+				$('#media').load('{% url 'player_game_matching' id_player %}')
+			}
+		})
+*/
+		$('#auto').load('{% url 'player_game' id_player %} #auto');
+	}
    
     setInterval( "update_message_home()", 2000 );
     
 </script>
-<script type="text/javascript">
-	function windowpop(url, width, height) {
-		var leftPosition, topPosition;
-		//Allow for borders.
-		leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
-		//Allow for title and status bars.
-		topPosition = (window.screen.height / 2) - ((height / 2) + 50);
-		//Open the window.
-		window.open(url, "Window2", "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no");
-	}
-</script>
 
-<script type="text/javascript">
-	function matchView(urlMatchView) {
-		var win;
-		var a = '{{image}}';
-		win = window.open(urlMatchView, '_blank');
-		win.focus();
-		
-		win.window.onload = function() {
-			win.document.getElementById("title").innerHTML = "HOLASSSSSSS";
-			win.document.getElementById("img").src = a;		
-			//win.document.getElementById("file").src = '/'+{{ file }};							
-		}
-		
-		alert(a);
-
-	}
-</script>
 
 {% endblock content_wrapper %}

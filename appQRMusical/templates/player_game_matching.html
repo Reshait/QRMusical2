@@ -1,4 +1,4 @@
-        <div class="col-sm-12 QRM_box QRM_pink" id="media">
+<!--        <div class="col-sm-12 QRM_box QRM_pink" id="media">-->
                 <div class="QRM_box_in">
                         
                         <div style="border-radius: 30px; border: 2px dashed; width: 50px; height: 50px; overflow: hidden; float: right;">
@@ -20,12 +20,18 @@
                                 
                                 <div style="margin-top:10px">
                                         {% if file %}
-                                                <a href="/{{ file }}" target="_blank" class="btn btn-default" >play file</a>                                    
+                                        <!--
+                                                <a href="/{{ file }}" target="_blank" class="btn btn-default" >play file</a>  
+                                        -->
+                                                <audio controls style="width: 200px;">
+                                                        <source src="/{{ file }}" type="audio/mp3">
+                                                        Your browser does not support the audio element.
+                                                </audio>                                                                                  
                                         {% endif %}
                                 </div>
                                 
                         </div>  
                                 
                 </div>
-        </div>
+<!--        </div>-->
 

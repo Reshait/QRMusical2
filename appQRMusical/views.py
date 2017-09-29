@@ -211,6 +211,8 @@ def game(id_player):
 				global_vars.game_image = ('/%s%s') % (settings.MEDIA_URL,obj.image.url[6:])
 				if obj.file:
 					global_vars.game_file = obj.file.url
+				else:
+					global_vars.game_file = None
 				buzzer = Buzzer(8)						# Init Buzzer
 				blink(5, .05, 5)	# nTimes, speed, pin
 				buzzer.play(1)		# 1 --> Sucess melody
@@ -254,22 +256,22 @@ def player_game_matching(request, id_player):
 
         player = Player.objects.get(id=id_player)
 
-        start_cam()
+#        start_cam()
 
-        print(global_vars.message)
+#        print(global_vars.message)
 
         game(id_player)
 
         context = {'message_alert' : global_vars.message_alert}
         context['image'] = global_vars.game_image
         context['file'] = global_vars.game_file
-        context['message_text'] = global_vars.message
-        context['title'] = "%s Player Game" % player.name
-        context['subtitle'] = "Select a list of songs"
+#        context['message_text'] = global_vars.message
+#        context['title'] = "%s Player Game" % player.name
+#        context['subtitle'] = "Select a list of songs"
         context['id_player'] = id_player
-        context['name_player'] = player.name
-        context['game_fail'] = global_vars.game_fail
-        context['game_success'] = global_vars.game_success
+#        context['name_player'] = player.name
+#        context['game_fail'] = global_vars.game_fail
+#        context['game_success'] = global_vars.game_success
         context['game_points'] = global_vars.game_points
         context['game_number_objects'] = global_vars.game_number_objects
         context['game_display'] = global_vars.game_display
@@ -298,6 +300,7 @@ def Login(request):
 				context['message_alert'] = "alert-success"
 				context['message_head'] = "Success! "
 				context['message_text'] = "The user <%s> is active." % username
+				return HttpResponseRedirect('/settings/')
 
 			else:
 				context['message_alert'] = "alert-danger"
@@ -319,7 +322,7 @@ def Logout(request):
     	'message_head'	:	'Success!',
     	'message_text'	:	'User logout correctly.',
     }
-    return render(request, 'home.html', context)
+    return HttpResponseRedirect('/')
 
 
 # ======== Settings zone ========
