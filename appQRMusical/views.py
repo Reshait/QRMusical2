@@ -200,7 +200,7 @@ def game(id_player):
 					url = obj.file.url
 					
 			url = url[6:]  			# del "files/" of url
-#			os.system('wmctrl -r zbar barcode reader -b add,above')
+			os.system('wmctrl -r zbar barcode reader -b add,above')
 			
 			if url == qrcode: 		# Match OK
 				global_vars.game_success +=1
