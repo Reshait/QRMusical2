@@ -41,6 +41,8 @@ from django.core.urlresolvers import reverse
 from .forms import EditEmailForm, EditPassForm
 from django.contrib.auth.hashers import make_password
 
+from django.http import JsonResponse
+
 
 # Create your views here.
 class Home(TemplateView):
@@ -231,7 +233,7 @@ def player_game_song(request, id_player):
 	context['image'] = global_vars.game_image
 	context['file'] = global_vars.game_file
 	context['id_player'] = id_player 
-
+	global_vars.game_file = None
 	"""	
 	context['message_text'] = global_vars.message
 	context['title'] = "%s Player Game" % player.name
@@ -249,7 +251,16 @@ def player_game_song(request, id_player):
 
 		
 def player_game(request, id_player):
-	
+	global_vars.cam = 0
+	global_vars.message = 'Get close QR code to cam'
+	global_vars.last_message = global_vars.message
+	global_vars.message_alert = "alert-info"
+	global_vars.game_image = "/files/static/Who.png"
+	global_vars.game_image = ""
+	global_vars.game_file = ""
+	global_vars.game_display = "none"
+
+
 	player = Player.objects.get(id=id_player)
 
 	start_cam()
@@ -278,7 +289,7 @@ def player_game_matching(request, id_player):
 
         player = Player.objects.get(id=id_player)
 
-#        start_cam()
+        start_cam()
 
 #        print(global_vars.message)
 
@@ -287,18 +298,20 @@ def player_game_matching(request, id_player):
         context = {'message_alert' : global_vars.message_alert}
         context['image'] = global_vars.game_image
         context['file'] = global_vars.game_file
-#        context['message_text'] = global_vars.message
-#        context['title'] = "%s Player Game" % player.name
-#        context['subtitle'] = "Select a list of songs"
+        context['message_text'] = global_vars.message
+        context['title'] = "%s Player Game" % player.name
+        context['subtitle'] = "Select a list of songs"
         context['id_player'] = id_player
-#        context['name_player'] = player.name
-#        context['game_fail'] = global_vars.game_fail
-#        context['game_success'] = global_vars.game_success
+        context['name_player'] = player.name
+        context['game_fail'] = global_vars.game_fail
+        context['game_success'] = global_vars.game_success
         context['game_points'] = global_vars.game_points
         context['game_number_objects'] = global_vars.game_number_objects
         context['game_display'] = global_vars.game_display
+        context['url'] = reverse('player_game_song', args=(id_player,)) if global_vars.game_file else None
+        os.system('wmctrl -r zbar barcode reader -b add,above')
 
-        return render(request, 'player_game_matching.html', context)
+        return JsonResponse(context)
 
 
 # ======== Login zone ========

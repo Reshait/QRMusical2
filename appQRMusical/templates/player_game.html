@@ -30,10 +30,10 @@
 		<div class="QRM_box_in">
 		                
 			<div style="border-radius: 30px; border: 2px dashed; width: 50px; height: 50px; overflow: hidden; float: right;">
-			        <div style=" font-weight: 300; font-size: 24px; margin: 0; margin-top: 10px; color: white !important;">
+			        <div id="success" style=" font-weight: 300; font-size: 24px; margin: 0; margin-top: 10px; color: white !important;">
 			                <p>{{ game_success }} | {{ game_number_objects }}</p>
 			        </div>
-			        <div style="font-size: 10px;line-height: 12px;margin-top: 0px; color: #a94442;">
+			        <div id="fails" style="font-size: 10px;line-height: 12px;margin-top: 0px; color: #a94442;">
 			                {{ game_fail }}
 			        </div>
 			</div>
@@ -62,8 +62,15 @@
 <!-- Hasta aquí -->		
 	</div>
 	
+
+	<div class="col-sm-12 QRM_box alert alert-danger" style="display: none;" id="danger">
+	</div>
+	<div class="col-sm-12 QRM_box alert alert-info" id="info">
+		Get close QR code to cam
+	</div>
+
 	
-	<div class="col-sm-12 QRM_box alert {{ message_alert }}">
+<!-- 	<div class="col-sm-12 QRM_box alert {{ message_alert }}">
 		<p>
 			<strong>
 				{% if message_alert == 'alert-info' %}
@@ -83,7 +90,7 @@
 				{{ message_text }}
 			{% endif %}
 		</p>
-	</div>
+	</div> -->
 	
 </div>
 
@@ -96,24 +103,45 @@
 //	var flag_file = null;
 
     function update_message_home(){
-/*  	
+ 	/*
     	var file = document.getElementById('file')
     	
     	if(file != null && file != flag_file){
     		flag_file = file;
     		windows.open(file.href);
     	}
-/*
-
-/*
-        $.get('{% url 'player_game_matching' id_player %}', function(data) {
-			if (old_value != data) {
-				old_value = data
-				$('#media').load('{% url 'player_game_matching' id_player %}')
-			}
-		})
 */
-		$('#auto').load('{% url 'player_game' id_player %} #auto');
+
+
+        $.get('{% url 'player_game_matching' id_player %}', function(data) {
+        	console.log(data);
+        	console.log(data.url);
+
+        	$('#success').html('<p>' + data.game_success + ' | ' + data.game_number_objects + '</p>')
+        	$('#fails').html(data.game_fail)
+
+        	if (data.url) {
+        		console.log('open', data.url)
+        		window.location.assign(data.url)
+        	}
+
+        	var danger = $('#danger');
+        	var info = $('#info')
+        	if (data.message_alert == 'alert-danger') {
+        		danger.html("<strong>Error!</strong>The QR code '" + data.message_text + "' does not exist, is not an " + data.name_player + " or has already been counted. <strong>Please try another one.</strong>")
+        		danger.show()
+        		info.hide()
+
+        		console.log('danger')
+        	} else {
+				danger.hide()
+				info.show()        		
+        	}
+		})
+
+
+
+		//$('#auto').load('{% url 'player_game' id_player %} #auto');
 	}
    
     setInterval( "update_message_home()", 2000 );
