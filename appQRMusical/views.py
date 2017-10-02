@@ -291,12 +291,10 @@ def player_game_matching(request, id_player):
 
         start_cam()
 
-#        print(global_vars.message)
-
         game(id_player)
 
         context = {'message_alert' : global_vars.message_alert}
-        context['image'] = global_vars.game_image
+        context['image'] = global_vars.game_image  
         context['file'] = global_vars.game_file
         context['message_text'] = global_vars.message
         context['title'] = "%s Player Game" % player.name
@@ -308,7 +306,13 @@ def player_game_matching(request, id_player):
         context['game_points'] = global_vars.game_points
         context['game_number_objects'] = global_vars.game_number_objects
         context['game_display'] = global_vars.game_display
-        context['url'] = reverse('player_game_song', args=(id_player,)) if global_vars.game_file else None
+        context['url'] = reverse('player_game_song', args=(id_player,)) if global_vars.game_image else None
+        # if global_vars.game_image != None:
+        #     if global_vars.game_file != None:
+        #         context['url'] = reverse('player_game_song', args=(id_player,)) if global_vars.game_file else None
+        #     else:
+        #         context['url'] = reverse('player_game_song', args=(id_player,)) if global_vars.game_image else None       		
+
         os.system('wmctrl -r zbar barcode reader -b add,above')
 
         return JsonResponse(context)

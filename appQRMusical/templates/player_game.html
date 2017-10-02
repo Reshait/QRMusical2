@@ -120,7 +120,14 @@
         	$('#success').html('<p>' + data.game_success + ' | ' + data.game_number_objects + '</p>')
         	$('#fails').html(data.game_fail)
 
-        	if (data.url) {
+        	// if (data.url) {
+        	// 	console.log('open', data.url)
+        	// 	window.location.assign(data.url)
+        	// }
+
+
+        	if (data.image) {
+        		data.url = data.image
         		console.log('open', data.url)
         		window.location.assign(data.url)
         	}
