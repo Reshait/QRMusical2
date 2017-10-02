@@ -14,7 +14,7 @@ def stop_cam():
 	if global_vars.zbar_status != None:
 		os.system("ps -A | grep zbar| awk '{print $1}' | xargs kill -9 $1")
 		global_vars.zbar_status = None
-		global_vars.message = 'Get close QR code to cam'
+		#global_vars.message = 'Get close QR code to cam'
 		global_vars.cam = 1
 
 
@@ -31,7 +31,4 @@ def restart_game_vars():
 	global_vars.game_image = ""
 	global_vars.game_file = ""
 	global_vars.game_display = "none"
-
-
-
-
+	global_vars.message = 'Get close QR code to cam'

@@ -1,0 +1,35 @@
+
+{% extends "body.html" %}
+
+{% block content_wrapper %}
+
+{% load staticfiles %}
+
+<a href="{% url  'player_game' id_player %}">
+	<div>
+		<p>← Back to player list</p>
+	</div>
+</a>
+
+<div class="col-sm-12 QRM_box QRM_pink" id="media">
+
+	<div class="QRM_box_in">
+	                
+
+		<img src="{{ image }}" width="auto" style="border-radius: 10px;max-height: 350px;margin: 10px 0 10px 0;">
+		<div >
+
+			<audio controls>
+			  <source src="/{{ file }}" type="audio/ogg">
+			  <source src="/{{ file }}" type="audio/mpeg">
+			Your browser does not support the audio element.
+			</audio>
+			
+		</div>
+		        
+	</div>
+
+</div>
+
+{% endblock content_wrapper %}
+

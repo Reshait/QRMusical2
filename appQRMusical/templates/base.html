@@ -53,6 +53,8 @@
 			{% if not 'player_game/' in request.get_full_path %}
 				{% stop_cam %}
 				{% restart_game_vars %}
+			{% elif 'player_game_song' in request.get_full_path %}
+				{% stop_cam %}
 			{% endif %}
 		</div>
 		
