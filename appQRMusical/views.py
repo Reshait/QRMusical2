@@ -32,9 +32,9 @@ from django.core.urlresolvers import reverse_lazy
 #Player Game
 import threading
 import subprocess
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
-#GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BOARD)
 from django.core.urlresolvers import reverse
 
 # User Settings
@@ -215,17 +215,17 @@ def game(id_player):
 					global_vars.game_file = obj.file.url
 				else:
 					global_vars.game_file = None
-#				buzzer = Buzzer(8)						# Init Buzzer
-#				blink(5, .05, 5)	# nTimes, speed, pin
-#				buzzer.play(1)		# 1 --> Sucess melody
+				buzzer = Buzzer(8)						# Init Buzzer
+				blink(5, .05, 5)	# nTimes, speed, pin
+				buzzer.play(1)		# 1 --> Sucess melody
 		
 		if global_vars.last_message != global_vars.message and matching == False: # Doesnt match
 			global_vars.game_fail += 1
 			global_vars.last_message = global_vars.message
 			global_vars.message_alert = "alert-danger"
-#			buzzer = Buzzer(8)						# Init Buzzer
-#			blink(5, .05, 7)	# nTimes, speed, pin
-#			buzzer.play(2)		# 1 --> Sucess melody
+			buzzer = Buzzer(8)						# Init Buzzer
+			blink(5, .05, 7)	# nTimes, speed, pin
+			buzzer.play(2)		# 1 --> Sucess melody
 						
 
 def player_game_song(request, id_player):
