@@ -197,7 +197,7 @@ def game(id_player):
 			if "images" == qrcode.split('/')[0]:
 				url = obj.image.url
 				
-			elif "songs" == qrcode.split('/')[0] or "video" == qrcode.split('/')[0]:
+			elif "songs" == qrcode.split('/')[0] or "movies" == qrcode.split('/')[0]:
 				if obj.file:
 					url = obj.file.url
 					
@@ -229,10 +229,16 @@ def game(id_player):
 						
 
 def player_game_song(request, id_player):
-	context = {'message_alert' : global_vars.message_alert}	
+	context = {'message_alert' : global_vars.message_alert}
+	if global_vars.game_file != None:
+		name, ext = global_vars.game_file.split('.')
+		context['extension'] = ext 
+	else:
+		context['extension'] = None		
 	context['image'] = global_vars.game_image
 	context['file'] = global_vars.game_file
 	context['id_player'] = id_player 
+
 	global_vars.game_file = None
 	"""	
 	context['message_text'] = global_vars.message
@@ -307,12 +313,6 @@ def player_game_matching(request, id_player):
         context['game_number_objects'] = global_vars.game_number_objects
         context['game_display'] = global_vars.game_display
         context['url'] = reverse('player_game_song', args=(id_player,)) if global_vars.game_image else None
-        # if global_vars.game_image != None:
-        #     if global_vars.game_file != None:
-        #         context['url'] = reverse('player_game_song', args=(id_player,)) if global_vars.game_file else None
-        #     else:
-        #         context['url'] = reverse('player_game_song', args=(id_player,)) if global_vars.game_image else None       		
-
         os.system('wmctrl -r zbar barcode reader -b add,above')
 
         return JsonResponse(context)

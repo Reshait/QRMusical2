@@ -23,10 +23,10 @@ def directory_to_upload(self, file):
     if extension == '.jpg' or extension == '.jpeg':
         directory = 'images/'
 
-    elif extension == '.mp3' or extension == '.mp4':
+    elif extension == '.mp3':
         directory = 'songs/'
 
-    elif extension == '.mov':
+    elif extension == '.mp4':
         directory = 'movies/'
 
     return os.path.join(directory, file)
